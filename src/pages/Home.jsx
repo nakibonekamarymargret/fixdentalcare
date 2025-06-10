@@ -1,35 +1,44 @@
-// src/pages/Home.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaPhoneAlt, FaRegClock, FaRegEnvelope } from "react-icons/fa6"; // Import icons
+import { IoCall } from "react-icons/io5";
+import { FaRegClock } from "react-icons/fa";
+import { CiMail } from "react-icons/ci";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="w-full">
-      {/* ======================= Hero Section ======================= */}
-      <div className="relative w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image Container */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/images/dental-bg.jpg')", // Adjust path to your image
+            backgroundImage: "url('/bg2.jpg')", // Ensure this image exists in public/
             backgroundBlendMode: "multiply",
             backgroundColor: "rgba(0, 0, 0, 0.4)",
           }}
         >
-          {/* Semi-transparent overlay to ensure text readability */}
+          {/* Optional gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#2e2976]/90 to-transparent"></div>
         </div>
 
-        {/* Content Section (Text, Button, Reviews) */}
+        {/* Hero Content */}
         <div className="relative z-10 text-white p-6 md:p-12 max-w-4xl mx-auto text-left flex flex-col items-start justify-center h-full">
           <p className="text-lg md:text-xl font-semibold mb-2">
-            Family Dental Care
+            Fix Dental Care
           </p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-6">
             Elevating Smiles with Expert Care and a Gentle Touch
           </h1>
-
           <Link
             to="/book-appointment"
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-xl transition duration-300 ease-in-out text-lg mb-8"
@@ -37,108 +46,128 @@ export default function Home() {
             Book Appointment
           </Link>
 
-          {/* Google Rating Section - Re-added as it was present in your previous snippet */}
-          <div className="flex items-center space-x-3 bg-white bg-opacity-20 backdrop-blur-sm p-4 rounded-lg">
-            <span className="font-semibold text-lg">Google Rating</span>
-            <span className="text-yellow-400 text-2xl">★★★★★</span>
-            <span className="text-lg">5.0</span>
-            <span className="text-gray-200">Based on 23k Reviews</span>
+          {/* Contact Info Links */}
+          <div className="mt-4 flex flex-col sm:flex-row gap-6 bg-violet-800 w-full p-4 rounded-lg shadow-md text-white">
+            <div className="flex items-center gap-2">
+              <IoCall className="text-xl" />
+              <span>Need a dental service</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaRegClock className="text-xl" />
+              <span>Opening Hours</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CiMail className="text-xl" />
+              <div className="flex flex-col leading-tight">
+                <span>Email us</span>
+                <span>fixdentalcare@gmail.com</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ======================= Info Bar Section ======================= */}
-      <div className="bg-[#2e2976] text-white py-8 px-6 md:px-12 flex flex-col md:flex-row justify-around items-center gap-8">
-        {/* Dental Services */}
-        <div className="flex flex-col items-center text-center md:text-left md:items-start max-w-xs">
-          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 mb-4 text-white text-3xl">
-            <FaPhoneAlt />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">Need Dental Services?</h3>
-          <p className="text-lg">+1 123 456 789</p>
-        </div>
-
-        {/* Opening Hours */}
-        <div className="flex flex-col items-center text-center md:text-left md:items-start max-w-xs">
-          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 mb-4 text-white text-3xl">
-            <FaRegClock />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">Opening Hours</h3>
-          <p className="text-lg">Mon to Sat 08:00 - 20:00</p>
-        </div>
-
-        {/* Email Us */}
-        <div className="flex flex-col items-center text-center md:text-left md:items-start max-w-xs">
-          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 mb-4 text-white text-3xl">
-            <FaRegEnvelope />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-          <p className="text-lg">contact@fixdentalcare.com</p>
-        </div>
-      </div>
-
-      {/* ======================= About Us Section ======================= */}
-      <div className="bg-white py-12 md:py-20 px-6 md:px-12 flex flex-col lg:flex-row items-center gap-10 lg:gap-20 max-w-6xl mx-auto">
-        {/* Left Section: Images */}
-        <div className="flex-1 grid grid-cols-2 gap-4">
-          <div className="relative">
-            {/* Image 1 (Larger, more prominent) */}
+      <section className="bg-white py-16 px-6 md:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          {/* Left side images */}
+          <div className="space-y-4">
             <img
-              src="/images/dentist-smiling.jpg" // Path to your first image
-              alt="Dentist smiling"
-              className="w-full h-auto object-cover rounded-lg shadow-lg"
+              src="/bg1.jpg"
+              alt="Dentist treating patient"
+              className="rounded-2xl shadow-md w-full object-cover h-[300px]"
             />
-            {/* Optional: Add a smaller image floating over it */}
             <img
-              src="/images/patient-smile.jpg" // Path to your second image
-              alt="Patient smiling"
-              className="absolute -bottom-8 -left-8 w-48 h-auto object-cover rounded-lg shadow-xl border-4 border-white transform rotate-3 hidden sm:block"
+              src="/bg2.jpg"
+              alt="Happy patient with dentist"
+              className="rounded-2xl shadow-md w-full object-cover h-[300px]"
             />
           </div>
-          {/* Image 2 (If you want another prominent one, or remove this if only 1 large + 1 small) */}
-          {/* <div className="hidden md:block"> {/* Hide on smaller screens if you only want 1 large + 1 small */}
-          {/* <img
-              src="/images/second-dentist.jpg" // Path to another image
-              alt="Another dentist"
-              className="w-full h-auto object-cover rounded-lg shadow-lg"
-            />
-          </div> */}
-        </div>
 
-        {/* Right Section: Text Content */}
-        <div className="flex-1 flex flex-col items-start text-left">
-          <h3 className="text-blue-600 text-lg font-semibold uppercase mb-2">
-            About Us
-          </h3>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-var(--color-white) leading-tight mb-6">
-            Professionals and Personalized Dental Excellence
-          </h2>
-          <p className="text-gray-700 text-lg mb-6 leading-relaxed">
-            We offer high-quality dental care tailored for the whole family.
-            From routine check-ups and cleanings to advanced cosmetic and
-            restorative procedures, our dedicated team ensures your comfort and
-            delivers exceptional results.
-          </p>
-          <ul className="text-gray-700 text-lg space-y-3 mb-8">
-            <li className="flex items-center gap-2">
-              <span className="text-green-500 text-xl">✓</span> Compassionate
-              and experienced team.
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-green-500 text-xl">✓</span> State-of-the-art
-              technology.
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-green-500 text-xl">✓</span> Personalized
-              treatment plans.
-            </li>
-          </ul>
-          <Link
-            to="/about"
-            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out text-lg"
-          >
-            Learn More
-          </Link>
+          {/* Right side text content */}
+          <div>
+            <p className="text-blue-600 font-medium mb-2">About Us</p>
+            <h2 className="text-4xl font-bold mb-4 text-gray-800 leading-snug">
+              Professionals and Personalized Dental Excellence
+            </h2>
+            <p className="text-gray-600 mb-6">
+              We offer high-quality dental care tailored for the whole family.
+              From routine checkups to advanced treatments, our compassionate
+              team ensures your smile stays healthy and confident.
+            </p>
+            <Link
+              to="/about"
+              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </section>
+      <div className="services bg-blue-50 py-16 px-6 md:px-20">
+        <h4 className="text-blue-600 font-medium mb-2">Our Services</h4>
+        <h5 className="text-dark fontmeduim mb-3">
+          Complete Care for Every Smile
+        </h5>
+        <p className="text-gray-600 mb-6">
+          From routine cleanings to advanced restorations, we provide
+          personalized dental solutions for patients of all ages.
+        </p>
+        <div className="services">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+          </div>
+          <Button className="bg-blue-600 text-white">View all Services</Button>
         </div>
       </div>
     </div>
