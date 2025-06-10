@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Appointments from "./pages/Appointments";
 import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 
 export default function App() {
   return (
@@ -13,8 +14,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/appointments" element={<Appointments />} />
-        
         </Routes>
+        <Footer />
       </main>
     </div>
   );

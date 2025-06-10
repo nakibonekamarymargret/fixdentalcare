@@ -14,9 +14,11 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import FaqSection from "@/components/FaqSection"; // Ensure this path is correct
 export default function Home() {
   return (
     <div className="w-full">
+      {/* Hero Section */}
       <section className="relative w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image Container */}
         <div
@@ -67,6 +69,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Us Section */}
       <section className="bg-white py-16 px-6 md:px-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left side images */}
@@ -103,9 +106,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Services Section */}
       <div className="services bg-blue-50 py-16 px-6 md:px-20">
         <h4 className="text-blue-600 font-medium mb-2">Our Services</h4>
-        <h5 className="text-dark fontmeduim mb-3">
+        <h5 className="text-dark font-medium mb-3">
           Complete Care for Every Smile
         </h5>
         <p className="text-gray-600 mb-6">
@@ -167,9 +172,203 @@ export default function Home() {
               </CardFooter>
             </Card>
           </div>
-          <Button className="bg-blue-600 text-white">View all Services</Button>
+          <Button className="bg-blue-600 text-white">View All Services</Button>
         </div>
       </div>
+
+      {/* Full-Width Rectangle Section */}
+      <section className="bg-blue-800 text-white py-16">
+        <div className="container mx-auto px-6 md:px-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {/* Statistic Card 1 */}
+            <div className="bg-white text-blue-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+              <h2 className="text-4xl font-bold mb-2">10000+</h2>
+              <p className="text-lg">Happy Patients</p>
+            </div>
+
+            {/* Statistic Card 2 */}
+            <div className="bg-white text-blue-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+              <h2 className="text-4xl font-bold mb-2">2500+</h2>
+              <p className="text-lg">Teeth Whitened</p>
+            </div>
+
+            {/* Statistic Card 3 */}
+            <div className="bg-white text-blue-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+              <h2 className="text-4xl font-bold mb-2">800+</h2>
+              <p className="text-lg">Dental Implants</p>
+            </div>
+
+            {/* Statistic Card 4 */}
+            <div className="bg-white text-blue-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+              <h2 className="text-4xl font-bold mb-2">15+</h2>
+              <p className="text-lg">Years of Experience</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Why Choose Our Dental Care Section */}
+      <section className="bg-white py-16 px-6 md:px-20">
+        <div className="container mx-auto">
+          {/* Heading and Introductory Text */}
+          <div className="mb-12">
+            <p className="text-blue-600 font-medium mb-2">
+              Why Choose Our Dental Care
+            </p>
+            <h2 className="text-4xl font-bold mb-4 text-gray-800 leading-snug">
+              Exceptional Service With a Personal Touch
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Choosing the right dental provider matters. We combine expert
+              care, advanced technology, and a warm atmosphere to ensure every
+              visit is comfortable, efficient, and tailored to your unique
+              needs.
+            </p>
+          </div>
+
+          {/* Grid Layout for Images and Descriptions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Column 1: Descriptions */}
+            <div>
+              {/* Description 1 */}
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold mb-2">
+                  Experienced Dental Team
+                </h3>
+                <p className="text-gray-600">
+                  Skilled care backed by years of trusted dental experience.
+                </p>
+              </div>
+
+              {/* Description 2 */}
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold mb-2">
+                  Advanced Technology
+                </h3>
+                <p className="text-gray-600">
+                  Modern tools ensure accurate and efficient treatments.
+                </p>
+              </div>
+
+              {/* Description 3 */}
+              <div>
+                <h3 className="text-xl font-semibold mb-2">
+                  Family-Friendly Environment
+                </h3>
+                <p className="text-gray-600">
+                  Welcoming space for kids, teens, and adults.
+                </p>
+              </div>
+            </div>
+
+            {/* Column 2: Images */}
+            <div>
+              {/* Image 1 */}
+              <img
+                src="/bg1.jpg"
+                alt="Dentist treating patient"
+                className="w-full h-[250px] object-cover mb-4 rounded-lg shadow-md"
+              />
+
+              {/* Image 2 */}
+              <img
+                src="/bg1.jpg"
+                alt="Happy patient"
+                className="w-full h-[250px] object-cover mb-4 rounded-lg shadow-md"
+              />
+
+              {/* Image 3 */}
+              <img
+                src="/bg2.jpg"
+                alt="Dentist with patient"
+                className="w-full h-[250px] object-cover mb-4 rounded-lg shadow-md"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="services bg-blue-50 py-16 px-6 md:px-20">
+        <h4 className="text-blue-600 font-medium mb-2">Meet Our Dental Team</h4>
+        <h5 className="text-dark font-medium mb-3">Committed to Your Smile</h5>
+        <p className="text-gray-600 mb-6">
+          Our experienced dental team is here to make every visit positive and
+          personalized. With gentle hands and caring hearts.
+        </p>
+        <div className="services">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+                <CardAction>Card Action</CardAction>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      </div>
+      {/* FAQ Section */}
+      <section className="bg-white py-16 px-6 md:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          {/* Left side images */}
+          <div className="space-y-4">
+            <p className="text-blue-600 font-medium mb-2">
+              Everything You Need to Know
+            </p>
+            <h2 className="text-4xl font-bold mb-4 text-gray-800 leading-snug">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          {/* Right side FAQ content */}
+          <div>
+            <FaqSection />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
