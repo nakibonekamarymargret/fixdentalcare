@@ -150,7 +150,7 @@ const services = [
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <div className="relative w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="relative z-10 text-white px-6 w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
         <AnimatePresence>
           <motion.div
             key={heroSlides[currentIndex].image}
@@ -171,7 +171,7 @@ const services = [
               backgroundColor: "rgba(0, 0, 0, 0.4)",
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#2e2976]/90 to-transparent"></div>
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#2e2976]/90 to-transparent"></div>
           </motion.div>
         </AnimatePresence>
 
@@ -320,9 +320,9 @@ const services = [
             Complete Care for Every Smile{" "}
           </h4>
           <p className="text-gray-700 font-meduim text-lg mt-2">
-            Our services are top notch. From routine cleanings to
-            advanced restorations , <br /> we provide personalized dental
-            solutions for patients of all ages.
+            Our services are top notch. From routine cleanings to advanced
+            restorations , <br /> we provide personalized dental solutions for
+            patients of all ages.
           </p>
         </div>
         <motion.div

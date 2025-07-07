@@ -82,7 +82,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full fixed top-0 z-50 font-[Roboto] transition-all duration-300 ${navbarBgClass}`}
+      className={`w-full fixed top-0 z-[30] font-[Roboto] transition-all duration-300 ${navbarBgClass}`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
@@ -91,7 +91,6 @@ const Navbar = () => {
           className={`flex items-center gap-2 font-extrabold text-2xl ${logoColorClass}`}
         >
           <img className="w-70" src="/logo.png" alt="" />
-         
         </Link>
 
         {/* Mobile Toggle */}
@@ -188,7 +187,7 @@ const Navbar = () => {
           >
             Contact
           </Link>
-          
+
           <Button
             className={`${textColorClass} ml-4 bg-blue-600 hover:bg-blue-700 text-white transition`}
             onClick={bookAppointment}
