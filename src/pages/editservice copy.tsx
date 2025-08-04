@@ -1,4 +1,3 @@
-// ... (imports remain the same)
 import { useParams, Link } from "react-router-dom";
 import { servicesData } from "../data/servicesData";
 import { motion } from "framer-motion";
@@ -10,6 +9,7 @@ export default function ServiceDetail() {
   const service = servicesData[serviceId || ""];
 
   useEffect(() => {
+    // Scroll to top of the page when serviceId changes
     window.scrollTo(0, 0);
   }, [serviceId]);
 
@@ -18,47 +18,9 @@ export default function ServiceDetail() {
   }
   const allServices = Object.values(servicesData);
 
-  // A helper function to render the price section
-  const renderPriceSection = (details: { price?: string; categoricalPrice?: { category: string; items: { name: string; price: string }[] }[] }) => {
-    if (details.price) {
-      return (
-        <div className="flex justify-between items-center bg-white p-3 rounded-md mt-4">
-          <span className="font-semibold">Price / Cost</span>
-          <span className="text-blue-600 font-bold">{details.price}</span>
-        </div>
-      );
-    }
-
-    if (details.categoricalPrice && details.categoricalPrice.length > 0) {
-      return (
-        <div className="mt-4">
-          {details.categoricalPrice.map((cat: { category: string; items: { name: string; price: string }[] }, catIndex: number) => (
-            <div key={catIndex} className="bg-white p-3 rounded-md mb-2">
-              <h6 className="font-semibold text-gray-700 mb-2">
-                {cat.category}
-              </h6>
-              <ul className="list-none space-y-1">
-                {cat.items.map((item: { name: string; price: string }, itemIndex: number) => (
-                  <li
-                    key={itemIndex}
-                    className="flex justify-between text-sm text-gray-600"
-                  >
-                    <span>{item.name}</span>
-                    <span>UGX {item.price}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
+      {/* Left Column: Services List */}
       <div className="w-full md:w-1/4 bg-blue-50 p-6 shadow-md">
         <h3 className="text-xl font-bold mb-4">Service List</h3>
         <ul className="space-y-2  rounded-full">
@@ -68,7 +30,7 @@ export default function ServiceDetail() {
                 to={`/services/${s.slug}`}
                 className={`flex items-center justify-between p-3 rounded-lg transition-colors duration-200 ${
                   service.slug === s.slug
-                    ? "bg-blue-600 text-white font-semibold shadow-inner"
+                    ? "bg-[var(--color-primary)] text-white font-semibold shadow-inner"
                     : "text-gray-700 hover:bg-gray-200"
                 }`}
               >
@@ -82,6 +44,7 @@ export default function ServiceDetail() {
           <Button>Make appointment</Button>
         </div>
       </div>
+      {/* Right Column: Service Details */}
       <div className="w-full md:w-3/4 p-8 bg-white relative">
         <motion.div
           key={service.slug}
@@ -122,26 +85,23 @@ export default function ServiceDetail() {
                   </h5>
                   <div className="space-y-4 text-sm">
                     {/* causes  */}
-                    {service.description.adult.causes &&
-                      service.description.adult.causes.length > 0 && (
-                        <div>
-                          <h6 className="font-semibold text-gray-700">
-                            Causes{" "}
-                          </h6>
-                          <ul className="list-disc list-inside ml-4">
-                            {service.description.adult.causes.map((c, i) => (
-                              <li key={i}>{c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                    {service.description.adult.causes.length > 0 && (
+                      <div>
+                        <h6 className="font-semibold text-gray-700">causes </h6>
+                        <ul className="list-disc list-inside ml-4">
+                          {service.description.adult.causes.map((c, i) => (
+                            <li key={i}>{c}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     {/* Process */}
                     {service.description.adult.process.length > 0 && (
-                      <div className="space-y-4 mt-8">
-                        <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2 ">
+                      <div>
+                        <h6 className="font-semibold text-gray-700">
                           Procedure at FIX Dental Care
-                        </h5>
-                        <ol className="	list-decimal list-inside ml-4 space-y-2">
+                        </h6>
+                        <ol className="	list-decimal list-inside ml-4">
                           {service.description.adult.process.map((p, i) => (
                             <li key={i}>{p}</li>
                           ))}
@@ -153,7 +113,7 @@ export default function ServiceDetail() {
                       service.description.adult.aftercareAndExpectations
                         .length > 0 && (
                         <div className="space-y-4 mt-8">
-                          <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
+                          <h4 className="text-2xl font-semibold text-blue-800">
                             Aftercare and Expectations
                           </h4>
                           <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -165,8 +125,13 @@ export default function ServiceDetail() {
                           </ul>
                         </div>
                       )}
-                    {/* Price - Call the new helper function here */}
-                    {renderPriceSection(service.description.adult)}
+                    {/* Price */}
+                    <div className="flex justify-between items-center bg-white p-3 rounded-md mt-4">
+                      <span className="font-semibold">Price / Cost</span>
+                      <span className="text-blue-600 font-bold">
+                        {service.description.adult.price}
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
@@ -178,26 +143,23 @@ export default function ServiceDetail() {
                   </h5>
                   <div className="space-y-4 text-sm">
                     {/* causes  */}
-                    {service.description.child.causes &&
-                      service.description.child.causes.length > 0 && (
-                        <div>
-                          <h6 className="font-semibold text-gray-700">
-                            Signs your child may need it{" "}
-                          </h6>
-                          <ul className="list-disc list-inside ml-4">
-                            {service.description.child.causes.map((c, i) => (
-                              <li key={i}>{c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                    {service.description.child.causes.length > 0 && (
+                      <div>
+                        <h6 className="font-semibold text-gray-700">causes </h6>
+                        <ul className="list-disc list-inside ml-4">
+                          {service.description.child.causes.map((c, i) => (
+                            <li key={i}>{c}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     {/* Process */}
                     {service.description.child.process.length > 0 && (
-                      <div className="space-y-4 mt-8">
-                        <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2 ">
+                      <div>
+                        <h6 className="font-semibold text-gray-700">
                           Procedure at FIX Dental Care
-                        </h5>
-                        <ol className="list-decimal list-inside ml-4 space-y-2">
+                        </h6>
+                        <ol className="list-decimal0 list-inside ml-4">
                           {service.description.child.process.map((p, i) => (
                             <li key={i}>{p}</li>
                           ))}
@@ -209,7 +171,7 @@ export default function ServiceDetail() {
                       service.description.child.aftercareAndExpectations
                         .length > 0 && (
                         <div className="space-y-4 mt-8">
-                          <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
+                          <h4 className="text-2xl font-semibold text-blue-800">
                             Aftercare and Expectations
                           </h4>
                           <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -221,8 +183,13 @@ export default function ServiceDetail() {
                           </ul>
                         </div>
                       )}
-                    {/* Price - Call the new helper function here */}
-                    {renderPriceSection(service.description.child)}
+                    {/* Price */}
+                    <div className="flex justify-between items-center bg-white p-3 rounded-md mt-4">
+                      <span className="font-semibold">Price / Cost</span>
+                      <span className="text-blue-600 font-bold">
+                        {service.description.child.price}
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
@@ -236,16 +203,12 @@ export default function ServiceDetail() {
                 <h5 className="font-semibold text-gray-800">How it is done</h5>
                 <p className="text-gray-700 mt-2">{service.howItIsDone}</p>
               </div>
-              {service.whyIsItNecessary && (
-                <div>
-                  <h5 className="font-semibold text-gray-800">
-                    Why is it necessary
-                  </h5>
-                  <p className="text-gray-700 mt-2">
-                    {service.whyIsItNecessary}
-                  </p>
-                </div>
-              )}
+              <div>
+                <h5 className="font-semibold text-gray-800">
+                  Why is it necessary
+                </h5>
+                <p className="text-gray-700 mt-2">{service.whyIsItNecessary}</p>
+              </div>
             </div>
             {/* Additional Images */}
             {(service.moreImages ?? []).length > 0 && (
@@ -265,20 +228,6 @@ export default function ServiceDetail() {
                 </div>
               </div>
             )}
-            {/* Aftercare and Expectations Section */}
-            {service.aftercareAndExpectations &&
-              service.aftercareAndExpectations.length > 0 && (
-                <div className="space-y-4 mt-8">
-                  <h4 className="text-2xl font-semibold text-blue-800">
-                    Aftercare and Expectations
-                  </h4>
-                  <ul className="list-disc list-inside space-y-2 text-gray-700">
-                    {service.aftercareAndExpectations.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
           </div>
         </motion.div>
       </div>

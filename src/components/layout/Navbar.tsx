@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-
+import { Button } from "@/components/ui/button";
 const services = [
-  { _id: "1", name: "General Dentistry", slug: "general-dentistry" },
-  { _id: "2", name: "Cosmetic Dentistry", slug: "cosmetic-dentistry" },
-  { _id: "3", name: "Orthodontics", slug: "orthodontics" },
+  { _id: "1", name: "Root Canal", slug: "root-canal" },
+  {
+    _id: "2",
+    name: "Teeth Whitening Dentistry",
+    slug: "teeth-whitening",
+  },
+  { _id: "3", name: "Braces", slug: "braces" },
 ];
 
 const pages = ["about-us", "faq", "testimonials"];
@@ -93,7 +96,6 @@ const Navbar = () => {
           <img className="w-70" src="/logo.png" alt="" />
          
         </Link>
-
         {/* Mobile Toggle */}
         <button
           className="lg:hidden focus:outline-none"
@@ -190,7 +192,7 @@ const Navbar = () => {
           </Link>
           
           <Button
-            className={`${textColorClass} ml-4 bg-blue-600 hover:bg-blue-700 text-white transition`}
+            className={`${textColorClass} ml-4  hover:bg-sky-600 text-white transition`}
             onClick={bookAppointment}
           >
             Book Appointment

@@ -26,8 +26,6 @@ const Footer = () => {
             treatments and beautiful, healthy smiles for life.
           </p>
           <div className="flex gap-4 text-xl text-gray-400">
-           
-
             <a
               href="https://instagram.com/fix_dentalcare"
               target="_blank"
@@ -102,7 +100,13 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-
+      <div>
+        <iframe
+          src="https://www.google.com/maps/d/u/0/embed?mid=14C7MMmUeFv2SiiCcc6sRvh76Pz5G0hU&ehbc=2E312F"
+          width="640"
+          height="480"
+        ></iframe>
+      </div>
       {/* Footer Bottom */}
       <div className="mt-12 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
         <p>&copy; Copyright 2025 - Fix Dental Care by Designesia</p>

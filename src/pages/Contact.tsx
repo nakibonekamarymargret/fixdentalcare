@@ -34,6 +34,8 @@ const Contact = () => {
           <h4 className="text-blue-600 uppercase mb-2 text-center md:text-left">
             Get In Touch
           </h4>
+          
+
           <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-gray-800">
             Exceptional Service With a <br /> Personal Touch
           </h3>
@@ -78,6 +80,7 @@ const Contact = () => {
           <h4 className="text-xl font-semibold mb-6 text-gray-800">
             Send a Message
           </h4>
+
           <form>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700 mb-1">

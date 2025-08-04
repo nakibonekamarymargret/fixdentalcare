@@ -1,14 +1,14 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
-import Navbar from "./components/layout/Navbar.js";
-import Footer from "./components/layout/Footer.js";
-import Appointment from "./pages/Appointment.js";
+import Appointment from "./pages/Appointment";
 import About from "./pages/About";
-import Faq from "./pages/Faq.js";
+import Faq from "./pages/Faq";
 import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
-import PatientDashboard from "./components/patients/PatientDashboard;.js";
-import DentistDashboard from "./components/dentists/DentistDashboard.js";
+import Services from "./pages/Services";
+import ServiceDetail from "./pages/ServiceDetail";
 
 const App = () => { 
   return (
@@ -22,8 +22,8 @@ const App = () => {
         <Route path="/faq" element={<Faq />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/patients" element={<PatientDashboard />} />
-        <Route path="/dentist" element={<DentistDashboard />} />{" "}
+        <Route path="/services" element={<Services />} />
+        <Route path="/services/:serviceId" element={<ServiceDetail />} />
         {/* Fallback route */}
       </Routes>
       <Footer />
