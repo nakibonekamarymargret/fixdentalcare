@@ -65,7 +65,7 @@ export default function Home() {
       setCurrentIndex((prev) => (prev + 1) % heroSlides.length);
     }, 6000); // every 6 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [heroSlides.length]);
   // Transition on services ie reordering transition
   const initialServiceOrder = [0, 1, 2, 3];
   const [serviceOrder, setServiceOrder] = useState(initialServiceOrder);
@@ -146,7 +146,7 @@ export default function Home() {
     {
       image: "/DrROse.jpeg",
       name: "Dr Rose",
-      title: "Dentist",
+      title: "Dental Surgeon",
     },
     {
       image: "/Mary.jpeg",
@@ -156,7 +156,7 @@ export default function Home() {
     {
       image: "/NimrodWetaka.jpeg",
       name: "Dr Nimrod Wetaka",
-      title: "Dentist",
+      title: "Dental Surgeon",
     },
 
     {
@@ -434,7 +434,7 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-4 mt-4 px-4">
                 <div>
                   <h5 className="font-semibold text-gray-800">
-                    Experienced Dental
+                    Experienced Dental Service
                   </h5>
                   <p className="text-gray-600 text-sm">
                     Skilled care backed by years of trusted dental experience.

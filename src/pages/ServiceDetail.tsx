@@ -41,10 +41,10 @@ export default function ServiceDetail() {
                 {cat.items.map((item: { name: string; price: string }, itemIndex: number) => (
                   <li
                     key={itemIndex}
-                    className="flex justify-between text-sm text-gray-600"
+                    className="flex justify-start text-sm gap-2 text-blue-700"
                   >
                     <span>{item.name}</span>
-                    <span>UGX {item.price}</span>
+                    <span className=" text-black bold">UGX {item.price}</span>
                   </li>
                 ))}
               </ul>
@@ -56,7 +56,14 @@ export default function ServiceDetail() {
 
     return null;
   };
-
+ function getCategoryHeading(categoryKey: "adult" | "child") {
+   const desc = service.description[categoryKey];
+   if (desc?.categoricalPrice && desc.categoricalPrice.length > 0) {
+     return desc.categoricalPrice[0].category;
+   }
+   // Fallback titles
+   return categoryKey === "adult" ? "Adults" : "Children";
+ }
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       <div className="w-full md:w-1/4 bg-blue-50 p-6 shadow-md">
@@ -95,7 +102,7 @@ export default function ServiceDetail() {
             <img
               src={service.image}
               alt={service.title}
-              className="w-full h-64 object-cover rounded-lg mb-6 shadow-lg"
+              className="w-full max-w-xl mx-auto rounded-lg mb-6 shadow-lg object-contain"
             />
           </div>
           <h2 className="text-4xl font-bold mb-4 border-b-2 pb-2">
@@ -113,120 +120,221 @@ export default function ServiceDetail() {
             </div>
             {/* Adults vs. Children Details Section */}
             <h4 className="text-2xl font-semibold ">Service Details</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Adults Section */}
-              {service.description.adult && (
-                <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
-                  <h5 className="text-lg font-bold text-gray-800 mb-4">
-                    Adults
-                  </h5>
-                  <div className="space-y-4 text-sm">
-                    {/* causes  */}
-                    {service.description.adult.causes &&
-                      service.description.adult.causes.length > 0 && (
-                        <div>
-                          <h6 className="font-semibold text-gray-700">
-                            Causes{" "}
-                          </h6>
-                          <ul className="list-disc list-inside ml-4">
-                            {service.description.adult.causes.map((c, i) => (
-                              <li key={i}>{c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    {/* Process */}
-                    {service.description.adult.process.length > 0 && (
-                      <div className="space-y-4 mt-8">
-                        <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2 ">
-                          Procedure at FIX Dental Care
-                        </h5>
-                        <ol className="	list-decimal list-inside ml-4 space-y-2">
-                          {service.description.adult.process.map((p, i) => (
-                            <li key={i}>{p}</li>
-                          ))}
-                        </ol>
-                      </div>
-                    )}
-                    {/* Aftercare and Expectations Section */}
-                    {service.description.adult.aftercareAndExpectations &&
-                      service.description.adult.aftercareAndExpectations
-                        .length > 0 && (
-                        <div className="space-y-4 mt-8">
-                          <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
-                            Aftercare and Expectations
-                          </h4>
-                          <ul className="list-disc list-inside space-y-2 text-gray-700">
-                            {service.description.adult.aftercareAndExpectations.map(
-                              (item, index) => (
-                                <li key={index}>{item}</li>
-                              )
+
+            {(() => {
+              const hasAdult = Boolean(service.description.adult);
+              const hasChild = Boolean(service.description.child);
+              const columns =
+                hasAdult && hasChild ? "grid-cols-2" : "grid-cols-1";
+
+              return (
+                <div className={`grid grid-cols-1 ${columns} gap-4 mt-6`}>
+                  {/* Adult Section */}
+                  {hasAdult && (
+                    <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
+                      {service.description.adult && (
+                        <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
+                          <h5 className="text-lg font-bold text-gray-800 mb-4">
+                            {getCategoryHeading("adult")} in adults
+                          </h5>
+
+                          <div className="space-y-4 text-sm">
+                            {/* causes  */}
+                            {service.description.adult.causes &&
+                              service.description.adult.causes.length > 0 && (
+                                <div>
+                                  <h6 className="font-semibold text-gray-700 text-[20px]">
+                                    Causes{" "}
+                                  </h6>
+                                  <ul className="list-disc list-inside ml-4 text-[18px]">
+                                    {service.description.adult.causes.map(
+                                      (c, i) => (
+                                        <li key={i}>{c}</li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              )}
+                            {/* Process (flat or categorical) */}
+                            {Array.isArray(
+                              service.description.adult?.process ?? []
+                            ) &&
+                              (service.description.adult.process ?? []).length >
+                                0 && (
+                                <div className="space-y-4 mt-8">
+                                  <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                    Procedure at FIX Dental Care
+                                  </h5>
+                                  <ol className="list-decimal list-inside ml-4 space-y-2">
+                                    {(
+                                      service.description.adult.process ?? []
+                                    ).map((p, i) => (
+                                      <li key={i}>{p}</li>
+                                    ))}
+                                  </ol>
+                                </div>
+                              )}
+
+                            {(
+                              service.description.adult?.categoricalProcess ??
+                              []
+                            ).length > 0 && (
+                              <div className="space-y-4 mt-8">
+                                <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                  Procedure at FIXED Dental Care
+                                </h5>
+                                {(
+                                  service.description.adult
+                                    .categoricalProcess ?? []
+                                ).map((cat, ci) => (
+                                  <div
+                                    key={ci}
+                                    className="bg-white p-3 rounded-md shadow-sm"
+                                  >
+                                    <h6 className="font-semibold text-gray-700 mb-2">
+                                      {cat.category}
+                                    </h6>
+                                    <ol className="list-decimal list-inside ml-4 space-y-1">
+                                      {cat.items.map((step, si) => (
+                                        <li key={si}>
+                                          <strong>{step.title}:</strong>{" "}
+                                          {step.procedure}
+                                        </li>
+                                      ))}
+                                    </ol>
+                                  </div>
+                                ))}
+                              </div>
                             )}
-                          </ul>
+
+                            {/* Aftercare and Expectations Section */}
+                            {service.description.adult
+                              .aftercareAndExpectations &&
+                              service.description.adult.aftercareAndExpectations
+                                .length > 0 && (
+                                <div className="space-y-4 mt-8">
+                                  <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
+                                    Aftercare and Expectations
+                                  </h4>
+                                  <ul className="list-disc list-inside space-y-2 text-gray-700">
+                                    {service.description.adult.aftercareAndExpectations.map(
+                                      (item, index) => (
+                                        <li key={index}>{item}</li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              )}
+                            {/* Price - Call the new helper function here */}
+                            {renderPriceSection(service.description.adult)}
+                          </div>
                         </div>
-                      )}
-                    {/* Price - Call the new helper function here */}
-                    {renderPriceSection(service.description.adult)}
-                  </div>
-                </div>
-              )}
-              {/* Children Section */}
-              {service.description.child && (
-                <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
-                  <h5 className="text-lg font-bold text-gray-800 mb-4">
-                    Children
-                  </h5>
-                  <div className="space-y-4 text-sm">
-                    {/* causes  */}
-                    {service.description.child.causes &&
-                      service.description.child.causes.length > 0 && (
-                        <div>
-                          <h6 className="font-semibold text-gray-700">
-                            Signs your child may need it{" "}
-                          </h6>
-                          <ul className="list-disc list-inside ml-4">
-                            {service.description.child.causes.map((c, i) => (
-                              <li key={i}>{c}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    {/* Process */}
-                    {service.description.child.process.length > 0 && (
-                      <div className="space-y-4 mt-8">
-                        <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2 ">
-                          Procedure at FIX Dental Care
-                        </h5>
-                        <ol className="list-decimal list-inside ml-4 space-y-2">
-                          {service.description.child.process.map((p, i) => (
-                            <li key={i}>{p}</li>
-                          ))}
-                        </ol>
-                      </div>
-                    )}
-                    {/* Aftercare and Expectations Section */}
-                    {service.description.child.aftercareAndExpectations &&
-                      service.description.child.aftercareAndExpectations
-                        .length > 0 && (
-                        <div className="space-y-4 mt-8">
-                          <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
-                            Aftercare and Expectations
-                          </h4>
-                          <ul className="list-disc list-inside space-y-2 text-gray-700">
-                            {service.description.child.aftercareAndExpectations.map(
-                              (item, index) => (
-                                <li key={index}>{item}</li>
-                              )
+                      )}{" "}
+                    </div>
+                  )}
+                  {/* Child Section */}
+                  {hasChild && (
+                    <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                      {service.description.child && (
+                        <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                          <h5 className="text-lg font-bold text-gray-800 mb-4">
+                            {getCategoryHeading("child")} in children
+                          </h5>
+                          <div className="space-y-4 text-sm">
+                            {/* causes  */}
+                            {service.description.child.causes &&
+                              service.description.child.causes.length > 0 && (
+                                <div>
+                                  <h6 className="font-semibold text-gray-700">
+                                    Signs your child may need it{" "}
+                                  </h6>
+                                  <ul className="list-disc list-inside ml-4">
+                                    {service.description.child.causes.map(
+                                      (c, i) => (
+                                        <li key={i}>{c}</li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              )}
+                            {Array.isArray(
+                              service.description.adult?.process ?? []
+                            ) &&
+                              (service.description.child.process ?? []).length >
+                                0 && (
+                                <div className="space-y-4 mt-8">
+                                  <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                    Procedure at FIX Dental Care
+                                  </h5>
+                                  <ol className="list-decimal list-inside ml-4 space-y-2">
+                                    {(
+                                      service.description.child.process ?? []
+                                    ).map((p, i) => (
+                                      <li key={i}>{p}</li>
+                                    ))}
+                                  </ol>
+                                </div>
+                              )}
+
+                            {(
+                              service.description.child?.categoricalProcess ??
+                              []
+                            ).length > 0 && (
+                              <div className="space-y-4 mt-8">
+                                <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                  Procedure at FIXED Dental Care
+                                </h5>
+                                {(
+                                  service.description.child
+                                    .categoricalProcess ?? []
+                                ).map((cat, ci) => (
+                                  <div
+                                    key={ci}
+                                    className="bg-white p-3 rounded-md shadow-sm"
+                                  >
+                                    <h6 className="font-semibold text-gray-700 mb-2">
+                                      {cat.category}
+                                    </h6>
+                                    <ol className="list-decimal list-inside ml-4 space-y-1">
+                                      {cat.items.map((step, si) => (
+                                        <li key={si}>
+                                          <strong>{step.title}:</strong>{" "}
+                                          {step.procedure}
+                                        </li>
+                                      ))}
+                                    </ol>
+                                  </div>
+                                ))}
+                              </div>
                             )}
-                          </ul>
+                            {/* Aftercare and Expectations Section */}
+                            {service.description.child
+                              .aftercareAndExpectations &&
+                              service.description.child.aftercareAndExpectations
+                                .length > 0 && (
+                                <div className="space-y-4 mt-8">
+                                  <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
+                                    Aftercare and Expectations
+                                  </h4>
+                                  <ul className="list-disc list-inside space-y-2 text-gray-700">
+                                    {service.description.child.aftercareAndExpectations.map(
+                                      (item, index) => (
+                                        <li key={index}>{item}</li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              )}
+                            {/* Price - Call the new helper function here */}
+                            {renderPriceSection(service.description.child)}
+                          </div>
                         </div>
                       )}
-                    {/* Price - Call the new helper function here */}
-                    {renderPriceSection(service.description.child)}
-                  </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              );
+            })()}
             {/* More About this Service */}
             <div className="space-y-4 mt-8">
               <h4 className="text-2xl font-semibold">
@@ -250,17 +358,20 @@ export default function ServiceDetail() {
             {/* Additional Images */}
             {(service.moreImages ?? []).length > 0 && (
               <div className="space-y-4 mt-8">
-                <h4 className="text-2xl font-semibold text-blue-800">
-                  Images more
+                <h4 className="text-2xl font-semibold ">
+                 More {service.title} Pictures
                 </h4>
+                
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(service.moreImages ?? []).map((imgSrc, index) => (
                     <img
                       key={index}
                       src={imgSrc}
                       alt={`${service.title} detail ${index + 1}`}
-                      className="w-full h-auto rounded-lg shadow-md"
+                      // Updated classes for a consistent size and clear appearance
+                      className="w-full h-64 object-cover rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
                     />
+
                   ))}
                 </div>
               </div>

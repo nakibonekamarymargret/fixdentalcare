@@ -139,7 +139,7 @@ const About = () => {
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div>
                 <h5 className="font-semibold text-gray-800">
-                  Experienced Dental
+                  Experienced Dental Service
                 </h5>
                 <p className="text-gray-600 text-sm">
                   Skilled care backed by years of trusted dental experience.

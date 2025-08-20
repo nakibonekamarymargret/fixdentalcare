@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import  { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
@@ -7,19 +7,17 @@ const services = [
   { _id: "1", name: "Root Canal", slug: "root-canal" },
   {
     _id: "2",
-    name: "Teeth Whitening Dentistry",
-    slug: "teeth-whitening",
-  },
+    name: "Cosmetic Dentistry",
+    slug: "cosmetic-dentistry",
+    },
   { _id: "3", name: "Braces", slug: "braces" },
 ];
 
-const pages = ["about-us", "faq", "testimonials"];
 
 const Navbar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [pagesOpen, setPagesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,19 +42,16 @@ const Navbar = () => {
   const handleMouseEnter = (type: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (type === "services") setServicesOpen(true);
-    if (type === "pages") setPagesOpen(true);
   };
 
   const handleMouseLeave = (type: string) => {
     timeoutRef.current = window.setTimeout(() => {
       if (type === "services") setServicesOpen(false);
-      if (type === "pages") setPagesOpen(false);
     }, 200);
   };
   const closeAllMenus = () => {
     setMobileMenuOpen(false);
     setServicesOpen(false);
-    setPagesOpen(false);
   };
 
   const bookAppointment = () => {
@@ -94,7 +89,6 @@ const Navbar = () => {
           className={`flex items-center gap-2 font-extrabold text-2xl ${logoColorClass}`}
         >
           <img className="w-70" src="/logo.png" alt="" />
-         
         </Link>
         {/* Mobile Toggle */}
         <button
@@ -144,42 +138,15 @@ const Navbar = () => {
               </div>
             )}
           </div>
-
+          <Link to="/about-us" onClick={() => setMobileMenuOpen(false)}>
+            About Us
+          </Link>
           <Link
             to="/dentists"
             className={`${textColorClass} ${hoverColorClass}`}
           >
             Dentists
           </Link>
-
-          {/* Pages Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("pages")}
-            onMouseLeave={() => handleMouseLeave("pages")}
-          >
-            <button
-              className={`${textColorClass} ${hoverColorClass} flex items-center gap-1 transition`}
-            >
-              Pages <IoIosArrowDown />
-            </button>
-            {pagesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-white border shadow-md rounded-md z-50">
-                {pages.map((slug, idx) => (
-                  <Link
-                    key={idx}
-                    to={`/${slug}`}
-                    className="block px-4 py-2 text-gray-800 hover:bg-[#2e2976] hover:text-white transition"
-                    onClick={() => setPagesOpen(false)}
-                  >
-                    {slug
-                      .replace("-", " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
 
           {/* <Link to="/blog" className={`${textColorClass} ${hoverColorClass}`}>
             Blog
@@ -190,7 +157,7 @@ const Navbar = () => {
           >
             Contact
           </Link>
-          
+
           <Button
             className={`${textColorClass} ml-4  hover:bg-sky-600 text-white transition`}
             onClick={bookAppointment}
@@ -226,28 +193,15 @@ const Navbar = () => {
               ))}
             </div>
           </div>
-
+          <Link
+            to="/about-const context = useContext();"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            About Us
+          </Link>
           <Link to="/dentists" onClick={() => setMobileMenuOpen(false)}>
             Dentists
           </Link>
-
-          <div>
-            <p className="mb-1 font-semibold">Pages</p>
-            <div className="pl-4 space-y-1">
-              {pages.map((slug, idx) => (
-                <Link
-                  key={idx}
-                  to={`/${slug}`}
-                  className="block hover:underline"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {slug
-                    .replace("-", " ")
-                    .replace(/\b\w/g, (c) => c.toUpperCase())}
-                </Link>
-              ))}
-            </div>
-          </div>
 
           <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>
             Blog
