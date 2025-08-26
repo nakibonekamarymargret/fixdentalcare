@@ -1,4 +1,6 @@
 // ... (imports remain the same)
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams, Link } from "react-router-dom";
 import { servicesData } from "../data/servicesData";
 import { motion } from "framer-motion";
@@ -8,6 +10,7 @@ import { Button } from "../components/ui/button";
 export default function ServiceDetail() {
   const { serviceId } = useParams<{ serviceId: string }>();
   const service = servicesData[serviceId || ""];
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,7 +20,10 @@ export default function ServiceDetail() {
     return <div className="p-8 text-red-600">Service not found.</div>;
   }
   const allServices = Object.values(servicesData);
-
+  
+  const bookAppointment = () => {
+   navigate("/appointment");
+ }
   // A helper function to render the price section
   const renderPriceSection = (details: { price?: string; categoricalPrice?: { category: string; items: { name: string; price: string }[] }[] }) => {
     if (details.price) {
@@ -86,7 +92,7 @@ export default function ServiceDetail() {
           ))}
         </ul>
         <div className="pb-5">
-          <Button>Make appointment</Button>
+          <Button onClick={bookAppointment}>Make appointment</Button>
         </div>
       </div>
       <div className="w-full md:w-3/4 p-8 bg-white relative">
@@ -112,12 +118,32 @@ export default function ServiceDetail() {
             <p className="text-lg text-gray-700 font-medium">
               {service.definition}
             </p>
+            {/* Major services provides */}
+            {service.servicesProvided &&
+              service.servicesProvided.length > 0 && (
+                <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                  <h4 className="text-xl font-semibold mb-2">
+                    Major Services Provided
+                  </h4>
+                  <ul className="list-disc list-inside space-y-1">
+                    {service.servicesProvided.map((item, index) => (
+                      <li key={index} className="text-gray-700">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             <div className="bg-gray-100 p-6 rounded-lg border-l-4 border-blue-600">
               <h4 className="text-2xl font-semibold text-blue-600 mb-2">
                 Service Overview
               </h4>
               <p className="text-gray-800">{service.introduction}</p>
+              {service.description.main && (
+                <p className="text-gray-700 mt-4">{service.description.main}</p>
+              )}
             </div>
+
             {/* Adults vs. Children Details Section */}
             <h4 className="text-2xl font-semibold ">Service Details</h4>
 
@@ -359,9 +385,9 @@ export default function ServiceDetail() {
             {(service.moreImages ?? []).length > 0 && (
               <div className="space-y-4 mt-8">
                 <h4 className="text-2xl font-semibold ">
-                 More {service.title} Pictures
+                  More {service.title} Pictures
                 </h4>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(service.moreImages ?? []).map((imgSrc, index) => (
                     <img
@@ -371,7 +397,6 @@ export default function ServiceDetail() {
                       // Updated classes for a consistent size and clear appearance
                       className="w-full h-64 object-cover rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
                     />
-
                   ))}
                 </div>
               </div>

@@ -43,7 +43,7 @@ export interface Service {
   servicesProvided?: string[];
   description: ServiceDescriptionDetails;
   howItIsDone: string;
-  whyIsItNecessary?: string;
+  whyIsItNecessary?: string[];
   duration?: string;
   cost?: string;
   moreImages: string[];

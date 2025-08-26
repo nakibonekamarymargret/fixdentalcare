@@ -1,9 +1,28 @@
 import { type Service } from "../types/Service";
+import consultationImg from "../assets/images/consult.jpg";
+import examination2 from "../assets/images/examination2.jpeg";
+import examination3 from "../assets/images/examination3.jpeg";
+import examination4 from "../assets/images/examination4.jpeg";
+import examination5 from "../assets/images/examination5.jpeg";
+import scaling from "../assets/images/preventive1.jpeg";
+import preventive2 from "../assets/images/scaling1.jpeg";
 import rootCanalImg from "../assets/images/rootcanal.jpeg";
-import crowns from "../assets/images/crownfix.jpeg";
 import rootCanalCause from "../assets/images/rootcanal2.jpeg";
 import rootCanalPrevention from "../assets/images/rootcanal2.jpeg";
-import consultationImg from "../assets/images/consult.jpg"; 
+
+import crowns from "../assets/images/crownfix.jpeg";
+import crownprocedure from "../assets/images/crownprocedure.jpeg";
+import bridge1 from "../assets/images/bridge.jpeg";
+import bridge2 from "../assets/images/bridgefix.jpeg";
+// import braceProcedure from "../assets/images/braceprocedure.jpeg";
+// import braces from "../assets/images/braces.jpeg";
+// import braces1 from "../assets/images/braces1.jpeg";
+// import braces2 from "../assets/images/braces2.jpeg";
+// import bracesDone from "../assets/images/bracesdone.jpeg";
+// import braceTypes from "../assets/images/bracetypes.png";
+import dentalCrown from "../assets/images/dentalcrown.jpeg";
+
+
 import toothextraction2 from "../assets/images/toothextraction2.png";
 import teethwhitening from "../assets/images/teethwhitening.jpeg";
 import orthodontic1 from "../assets/images/adultbrace.png";
@@ -13,48 +32,59 @@ import orthodontic4 from "../assets/images/adultordotist.jpg";
 import orthodontic5 from "../assets/images/brace1.jpeg";
 import orthodontic6 from "../assets/images/brace2.jpeg";
 import orthodontic7 from "../assets/images/brace3.jpeg";
-import aboutus1 from "../assets/images/aboutus1.jpeg";
-import braceProcedure from "../assets/images/braceprocedure.jpeg";
-import braces from "../assets/images/braces.jpeg";
-import braces1 from "../assets/images/braces1.jpeg";
-import braces2 from "../assets/images/braces2.jpeg";
-import bracesDone from "../assets/images/bracesdone.jpeg";
-import braceTypes from "../assets/images/bracetypes.png";
-import bridge from "../assets/images/bridge.jpeg";
-import bridgeFix from "../assets/images/bridgefix.jpeg";
-import decay from "../assets/images/decay.jpeg";
-import decayTooth from "../assets/images/decaytooth.jpeg";
-import dentalFilling from "../assets/images/dental-filling.jpeg";
-import dentalCrown from "../assets/images/dentalcrown.jpeg";
-import dentalImplant from "../assets/images/dentalimplant.jpeg";
-import dentalInstruments from "../assets/images/dentalinstruments.jpeg";
-import dentalSealant from "../assets/images/dentalsealant.jpeg";
-import dentures from "../assets/images/dentures.jpeg";
-import examination from "../assets/images/examination.jpeg";
-import examination3 from "../assets/images/examination3.jpeg";
-import extraction from "../assets/images/extraction.jpeg";
-import familySmile from "../assets/images/familysmile.jpeg";
-import fixBraces from "../assets/images/fixbraces.jpeg";
-import fixDentalAligners from "../assets/images/fixdentalaligners.jpeg";
-import fixServices from "../assets/images/fixservices.jpeg";
+
+import DiagnosticRadiology from "../assets/images/DiagnosticRadiology.jpeg";
+
 import implant from "../assets/images/implant.jpeg";
 import implant1 from "../assets/images/implant1.jpeg";
 import implant2 from "../assets/images/implant2.jpeg";
 import implant3 from "../assets/images/implant3.jpeg";
 import implant4 from "../assets/images/implant4.jpeg";
 import implants from "../assets/images/implants.jpeg";
-import invisalign from "../assets/images/InvisalignOrthodontics.jpeg";
-import metalBraces from "../assets/images/metalbraces.jpeg";
-import orthoCategories from "../assets/images/orthodonticcategories.jpeg";
-import restorativeFilling from "../assets/images/restorativefilling.jpeg";
-import rush from "../assets/images/rush.jpeg";
-import smile from "../assets/images/smile.jpeg";
-import smile1 from "../assets/images/smile1.jpeg";
-import smile2 from "../assets/images/smile2.jpeg";
-import smile3 from "../assets/images/smile3.jpeg";
-import teethCaution from "../assets/images/teethcaution.jpeg";
-import teethCleaning from "../assets/images/teethcleaning.jpeg";
+
+import toothcleaning from "../assets/images/toothcleaning.jpeg"
 import teethCleaning1 from "../assets/images/teethcleaning1.jpeg";
+import teethcleaning2 from "../assets/images/teethcleaning2.jpeg";
+import teethcleaning3 from "../assets/images/teethcleaning3.jpeg";
+import teethcleaning4 from "../assets/images/teethcleaning4.jpeg";
+import teethwhitening1 from "../assets/images/teethwhitening1.jpeg";
+
+import dentures from "../assets/images/dentures.jpeg";
+import veners from "../assets/images/venersdentures.jpeg"
+import veners1 from "../assets/images/veners1.jpeg";
+import veners2 from "../assets/images/veners2.jpeg";
+import veners3 from "../assets/images/veners3.jpeg";
+import veners4 from "../assets/images/veners4.jpeg";
+import veners5 from "../assets/images/veners5.jpeg";
+import veners6 from "../assets/images/veners6.jpeg";
+
+import pediatric from "../assets/images/pediatric.png";
+import spacemaintainer1 from "../assets/images/spacemaintainer1.jpeg";
+import spacemaintainer2 from "../assets/images/spacemaintainers2.jpeg";
+import spacemaintainer3 from "../assets/images/spacemaintainers3.png";
+
+// import decay from "../assets/images/decay.jpeg";
+// import decayTooth from "../assets/images/decaytooth.jpeg";
+// import dentalFilling from "../assets/images/dental-filling.jpeg";
+// import dentalImplant from "../assets/images/dentalimplant.jpeg";
+// import dentalInstruments from "../assets/images/dentalinstruments.jpeg";
+// import dentalSealant from "../assets/images/dentalsealant.jpeg";
+
+// import extraction from "../assets/images/extraction.jpeg";
+// import familySmile from "../assets/images/familysmile.jpeg";
+// import fixBraces from "../assets/images/fixbraces.jpeg";
+// import fixDentalAligners from "../assets/images/fixdentalaligners.jpeg";
+// import fixServices from "../assets/images/fixservices.jpeg";
+
+// import invisalign from "../assets/images/InvisalignOrthodontics.jpeg";
+// import metalBraces from "../assets/images/metalbraces.jpeg";
+// import orthoCategories from "../assets/images/orthodonticcategories.jpeg";
+// import restorativeFilling from "../assets/images/restorativefilling.jpeg";
+// import rush from "../assets/images/rush.jpeg";
+// import smile from "../assets/images/smile.jpeg";
+// import smile1 from "../assets/images/smile1.jpeg";
+// import smile2 from "../assets/images/smile2.jpeg";
+
 
 
 
@@ -67,6 +97,12 @@ export const servicesData: Record<string, Service> = {
       "A dental consultation and exam is a process where a dentist assesses your overall oral health by examining your teeth, gums, and mouth, often including X-rays, to identify issues like cavities or gum disease.",
     definition:
       "For many, visiting the dentist can feel daunting, particularly if it's your first time or you haven't been in a while. At Fix Dental Care, we aim to make your experience as comfortable and welcoming as possible. With modern technology, a skilled team and a tailored approach, our private practice at Fix Dental Care ensures each visit builds a foundation for your oral health.",
+    servicesProvided: [
+      "General Dental Consultation",
+      "Emergency Consultation",
+      "Full Oral Examination + Report",
+    ],
+
     description: {
       main: "We offer various types of consultations to meet your specific needs.",
       adult: {
@@ -117,16 +153,22 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "During a consultation, the dentist will review your medical history, perform a thorough examination of your teeth and gums, and may take X-rays to assess your oral health. Based on the findings, they will discuss any necessary treatments or preventive measures.",
 
-    moreImages: [],
+    moreImages: [examination2, examination3, examination4, examination5],
   },
   "preventive-care": {
     title: "Preventive Care",
     slug: "preventive-care",
-    image: crowns, // Placeholder image, replace with actual preventive care image
+    image: scaling,
     introduction:
       "Preventive dentistry is dental care that helps maintain good oral health. It’s a combination of regular dental check-ups along with developing good habits like brushing and flossing. Taking care of your teeth starts early in childhood and extends throughout the course of your life.",
     definition:
       "Preventive care includes regular check-ups, cleanings, and patient education to maintain optimal oral health.",
+    servicesProvided: [
+      "Scaling and Polishing",
+      "Oral Hygiene Instruction",
+      "Fluoride Application",
+      "Dental Sealants (per tooth)",
+    ],
     description: {
       main: "Regular dental visits help prevent cavities, gum disease, and other oral health issues.",
       adult: {
@@ -174,8 +216,8 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "Preventive care involves regular dental visits, professional cleanings, and patient education on proper oral hygiene practices.",
     whyIsItNecessary:
-      "Preventive care is essential to avoid costly and painful dental procedures in the future. It helps maintain good oral health and prevents issues like cavities and gum disease.",
-    moreImages: [],
+[      "Preventive care is essential to avoid costly and painful dental procedures in the future. It helps maintain good oral health and prevents issues like cavities and gum disease.",
+] ,   moreImages: [preventive2],
   },
 
   "restorative-extractions": {
@@ -186,6 +228,12 @@ export const servicesData: Record<string, Service> = {
       "Restorative dentistry focuses on repairing and restoring damaged teeth, while extractions involve the removal of teeth that cannot be saved.",
     definition:
       "Restorative dentistry and extractions are two key areas of dental care focused on maintaining or restoring oral health...",
+    servicesProvided: [
+      "Temporary Filling",
+      "Composite Filling (Small)",
+      "Extraction of Primary Tooth",
+      "Pulpotomy / Pulpectomy",
+    ],
     description: {
       main: "Restorative procedures help restore the function and aesthetics of teeth, while extractions are necessary when a tooth is beyond repair.",
 
@@ -364,8 +412,8 @@ export const servicesData: Record<string, Service> = {
     },
     howItIsDone:
       "Procedures are performed under local anesthesia. Pediatric dentists prioritize comfort, using sedation or distraction when needed.",
-    whyIsItNecessary:
-      "Preserves or restores dental health and ensures proper jaw development.",
+    whyIsItNecessary:[
+      "Preserves or restores dental health and ensures proper jaw development."],
     moreImages: [],
   },
   orthodontics: {
@@ -376,7 +424,13 @@ export const servicesData: Record<string, Service> = {
       "Orthodontics is a branch of dentistry that focuses on diagnosing, preventing, and treating dental and facial irregularities. It involves the use of braces, aligners, and other appliances to straighten teeth and correct bite issues.",
     definition:
       "Orthodontics is a specialized field of dentistry that deals with the correction of misaligned teeth and jaws.",
-
+    servicesProvided: [
+      " Metal Braces (Both Jaws)",
+      "Ceramic Braces (Both Jaws)",
+      "Invisalign (Full Treatment)",
+      "Monthly Adjustment Visit",
+      "Retainers (per arch)",
+    ],
     description: {
       main: "Orthodontic treatment is essential for correcting misaligned teeth and jaws, improving both function and aesthetics.",
       adult: {
@@ -444,8 +498,8 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "Orthodontic treatment involves the use of braces, aligners, or other appliances to gradually move teeth into their correct positions. The process typically includes an initial consultation, diagnostic records, treatment planning, and regular adjustments throughout the treatment period.",
     whyIsItNecessary:
-      "Orthodontic treatment is necessary to correct misaligned teeth and jaws, which can lead to functional issues, aesthetic concerns, and long-term oral health problems. Proper alignment improves bite function, reduces wear on teeth, and enhances overall oral health.",
-    moreImages: [
+[      "Orthodontic treatment is necessary to correct misaligned teeth and jaws, which can lead to functional issues, aesthetic concerns, and long-term oral health problems. Proper alignment improves bite function, reduces wear on teeth, and enhances overall oral health.",
+] ,   moreImages: [
       orthodontic2,
       orthodontic5,
       orthodontic3,
@@ -457,12 +511,12 @@ export const servicesData: Record<string, Service> = {
   "diagnostic-radiology": {
     title: "Diagnostic & Radiology",
     slug: "diagnostic-radiology",
-    image: toothextraction2,
+    image: DiagnosticRadiology,
     introduction:
       "Diagnostic and radiology services in dentistry involve the use of advanced imaging techniques to assess oral health, diagnose conditions, and plan treatments effectively.",
     definition:
       "Diagnostic and radiology services include X-rays, CT scans, and other imaging techniques to evaluate dental health.",
-
+    servicesProvided: ["Intraoral X-Ray (Periapical)"],
     description: {
       main: "Orthodontic treatment is essential for correcting misaligned teeth and jaws, improving both function and aesthetics.",
       adult: {
@@ -506,18 +560,23 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "Diagnostic and radiology services involve taking X-rays or other imaging scans to visualize the teeth, bones, and surrounding structures. This helps in diagnosing conditions, planning treatments, and monitoring progress.",
     whyIsItNecessary:
-      "Early detection of dental problems: Radiographs allow dentists to identify issues like cavities, gum disease, and impacted teeth in their early stages, before they cause significant pain or damage. ",
+[      "Early detection of dental problems: Radiographs allow dentists to identify issues like cavities, gum disease, and impacted teeth in their early stages, before they cause significant pain or damage. ",
+]   ,
     moreImages: [],
   },
   "implants-surgery": {
     title: "Implants & Surgery",
     slug: "implants-surgery",
-    image: toothextraction2,
+    image: implants,
     introduction:
       "Implants and surgery in dentistry involve the placement of dental implants to replace missing teeth and surgical procedures to correct various oral health issues.",
     definition:
       "Implants are artificial tooth roots placed in the jawbone, while surgery may include extractions, bone grafts, or corrective jaw surgery.",
-
+    servicesProvided: [
+      "Dental Implant (1 tooth)",
+      "Bone Grafting:",
+      "Sinus Lift",
+    ],
     description: {
       main: "Implants provide a permanent solution for missing teeth, while surgery addresses complex dental issues.",
       adult: {
@@ -570,8 +629,8 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "Implants are surgically placed into the jawbone, where they fuse with the bone over time. Surgery may involve extractions, bone grafts, or corrective procedures to improve oral health and function.",
     whyIsItNecessary:
-      "Implants and surgery are necessary to restore function and aesthetics in cases of tooth loss or complex dental issues. They provide a long-term solution for missing teeth and can improve overall oral health.",
-    moreImages: [],
+[      "Implants and surgery are necessary to restore function and aesthetics in cases of tooth loss or complex dental issues. They provide a long-term solution for missing teeth and can improve overall oral health.",
+] ,   moreImages: [implant1, implant2, implant3, implant4, implant],
   },
 
   "root-canal": {
@@ -582,6 +641,12 @@ export const servicesData: Record<string, Service> = {
       "Root canal treatment is a dental procedure to save a damaged or infected tooth by removing the pulp, cleaning and disinfecting the inside, and then filling and sealing it.It's a common procedure, often needed when a cavity is too large for a regular filling or when the tooth's pulp becomes infected or inflamed. ",
     definition:
       "Root canal treatment, also known as endodontic treatment or Pulpotomy (Children), focuses on the inside (pulp) of the tooth, which contains nerves and blood vessels. ",
+    servicesProvided: [
+      "RCT for Anterior Tooth",
+      "RCT for Premolar",
+      "RCT for Molar Tooth",
+      "RCT with Crown Package",
+    ],
     description: {
       main: "Root canal treatment is essential for saving teeth affected by severe decay or infection. It involves removing the infected pulp, cleaning the inside of the tooth, and sealing it to prevent further infection.",
       adult: {
@@ -621,8 +686,8 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "The treatment is performed under local anesthesia. The dentist removes the infected pulp, disinfects the area, fills the canal, and then seals the tooth with a filling and a crown. The procedure is painless and is designed to save your natural tooth.",
     whyIsItNecessary:
-      "A root canal is necessary to save a tooth that is badly infected or decayed. If left untreated, the infection can spread to other teeth and the jawbone, leading to severe pain and potential tooth loss. Saving the tooth prevents the need for an extraction and the subsequent costs and complications of a dental implant or bridge.",
-    moreImages: [rootCanalImg, rootCanalPrevention, rootCanalCause],
+[      "A root canal is necessary to save a tooth that is badly infected or decayed. If left untreated, the infection can spread to other teeth and the jawbone, leading to severe pain and potential tooth loss. Saving the tooth prevents the need for an extraction and the subsequent costs and complications of a dental implant or bridge.",
+]  ,  moreImages: [rootCanalImg, rootCanalPrevention, rootCanalCause],
   },
 
   crowns: {
@@ -633,6 +698,14 @@ export const servicesData: Record<string, Service> = {
       "Dental crowns are custom-made caps placed over damaged teeth ensuring a natural-looking result. ",
     definition:
       "A dental crown is a tooth-shaped cap that is placed over a tooth to restore its shape, size, strength, and appearance.",
+    servicesProvided: [
+      "Temporary Crown (Acrylic)",
+      "Metal-Ceramic Crown",
+      "Full Ceramic (Zirconia) Crown",
+      "3-Unit Bridge (Metal-Ceramic)",
+      "3-Unit Bridge (Zirconia)",
+    ],
+
     description: {
       main: "Crowns are used to protect weak teeth, restore broken teeth, or cover discolored teeth.",
       adult: {
@@ -705,8 +778,8 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "Dental crowns are custom-made caps that cover the entire tooth, restoring its shape, size, strength, and appearance. The process involves reshaping the tooth, taking impressions, and fitting a temporary crown until the permanent one is ready.",
     whyIsItNecessary:
-      "Crowns are necessary to protect weak or damaged teeth, restore their function, and improve aesthetics. They can also be used to cover discolored teeth or to hold dental bridges in place.",
-    moreImages: [crowns],
+[      "Crowns are necessary to protect weak or damaged teeth, restore their function, and improve aesthetics. They can also be used to cover discolored teeth or to hold dental bridges in place.",
+]    ,moreImages: [dentalCrown, crownprocedure, bridge1, bridge2],
     // images of crowns and advantange
     aftercareAndExpectations: [
       "Sensitivity: The child may experience temporary sensitivity to hot or cold items.",
@@ -724,6 +797,12 @@ export const servicesData: Record<string, Service> = {
       " Cosmetic dentistry focuses on improving the appearance of teeth, gums, and smiles. It includes procedures like teeth whitening, veneers, and bonding to enhance the aesthetics of your smile.",
     definition:
       "Cosmetic dentistry is a branch of dentistry that focuses on improving the appearance of teeth, gums, and smiles.",
+    servicesProvided: [
+      "Tooth Whitening (In-Office)",
+      "Composite Veneers (per tooth)",
+      "Porcelain Veneers (per tooth)",
+      "Diastema Closure (Gap Filling)",
+    ],
     description: {
       main: "Cosmetic dentistry enhances the aesthetics of your smile through various procedures.",
       adult: {
@@ -756,18 +835,32 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "Cosmetic dentistry procedures are performed by qualified dentists using advanced techniques and materials to ensure optimal results.",
     whyIsItNecessary:
-      "Cosmetic dentistry is not just about aesthetics; it can also improve oral health, function, and self-esteem. A beautiful smile can boost confidence and encourage better oral hygiene practices.",
-    moreImages: [teethwhitening],
+[      "Cosmetic dentistry is not just about aesthetics; it can also improve oral health, function, and self-esteem. A beautiful smile can boost confidence and encourage better oral hygiene practices.",
+]  ,  moreImages: [
+      teethCleaning1,
+      teethwhitening1,
+      teethcleaning2,
+      toothcleaning,
+
+      teethcleaning3,
+      teethcleaning4,
+    ],
   },
 
   dentures: {
     title: "Dentures",
     slug: "dentures",
-    image: toothextraction2,
+    image: veners5,
     introduction:
       "Dentures are removable replacements for missing teeth and surrounding tissues. They can be complete (replacing all teeth) or partial (replacing some teeth).",
     definition:
       "Dentures are prosthetic devices designed to replace missing teeth and restore function and aesthetics.",
+    servicesProvided: [
+      " Partial Acrylic Denture (1-4 teeth)",
+      "Complete Denture (One Jaw)",
+      "Flexible Denture (Valplast)",
+      "Denture Repairs/Relines",
+    ],
     description: {
       main: "Dentures are used to restore the function and appearance of missing teeth.",
       adult: {
@@ -802,45 +895,149 @@ export const servicesData: Record<string, Service> = {
     howItIsDone:
       "Procedures are performed under local anesthesia. Pediatric dentists prioritize comfort, using sedation or distraction when needed.",
     whyIsItNecessary:
-      "Preserves or restores dental health and ensures proper jaw development.",
-    moreImages: [],
+[      "Preserves or restores dental health and ensures proper jaw development."
+]    ,
+    moreImages: [veners, veners1, veners2, veners3, veners4, veners6, dentures],
   },
   "pediatric-specialties": {
     title: "Pediatric Specialties",
     slug: "pediatric-specialties",
-    image: toothextraction2,
+    image: pediatric,
     introduction:
       "Pediatric dentistry focuses on the oral health of children from infancy through adolescence. It includes preventive care, treatment of dental issues, and education for parents and children.",
     definition:
       "Pediatric specialties in dentistry address the unique dental needs of children, ensuring healthy development and preventing future issues.",
+    servicesProvided: ["Space Maintainers"],
     description: {
-      main: "Pediatric dentistry provides specialized care for children's dental health, focusing on prevention and early intervention.",
+      main: "At FIX Dental Care, our pediatric dentistry service is designed to provide comprehensive, compassionate care for children. We recognize that children have unique needs compared to adults, and our team creates a safe, fun, and supportive environment that helps children feel comfortable while receiving essential care.",
       child: {
         causes: [
           "Early childhood cavities",
           "Thumb sucking or pacifier use",
           "Misaligned teeth or jaws",
           "Trauma to primary teeth",
+          "Genetic factors affecting tooth growth",
         ],
         process: [
-          "Initial consultation to assess oral health",
-          "Preventive care including cleanings and fluoride treatments",
-          "Treatment of cavities and other dental issues",
-          "Education for parents on oral hygiene practices",
+          "Initial consultation to assess oral health and dental development",
+          "Preventive care including cleanings, fluoride treatments, and sealants",
+          "Treatment of cavities with tooth-colored fillings",
+          "Guidance on diet and oral hygiene for parents and children",
+          "Early orthodontic evaluation when necessary",
         ],
         categoricalPrice: [
           {
             category: "Pediatric Dentistry",
-            items: [{ name: "  Space Maintainers", price: "200,000" }],
+            items: [{ name: "Space Maintainers", price: "200,000" }],
           },
         ],
-      }, // Closing bracket for 'child'
+        aftercareAndExpectations: [
+          "Children may need guidance and reassurance after treatment.",
+          "Parents should help children maintain daily brushing and flossing routines.",
+          "Dietary adjustments (less sugar intake) are recommended.",
+          "Regular checkups every 6 months ensure ongoing oral health.",
+        ],
+      },
     },
     howItIsDone:
-      "Pediatric dentists use child-friendly techniques and equipment to ensure a comfortable experience. They focus on preventive care and education to promote lifelong oral health habits.",
+      "Pediatric dentists use child-friendly techniques, smaller instruments, and behavior management strategies to provide safe and effective treatment. Our clinic emphasizes preventive care and parental education to help children establish lifelong oral hygiene habits.",
     whyIsItNecessary:
-      "Pediatric dentistry is essential for ensuring healthy dental development in children, preventing issues that can affect their overall health and well-being.",
-    moreImages: [],
+[      "Pediatric dentistry is essential for ensuring healthy dental development in children, preventing cavities, correcting habits like thumb sucking, and detecting orthodontic issues early to avoid complications later in life.",
+],    moreImages: [spacemaintainer1, spacemaintainer2, spacemaintainer3],
+  },
+  "pediatric-specialtie": {
+    title: "Pediatric Specialtie",
+    slug: "pediatric-specialtie",
+    image: pediatric,
+    introduction:
+      "Pediatric dentistry focuses on the oral health of children from infancy through adolescence. It includes preventive care, treatment of dental issues, and education for parents and children, ensuring a positive and comfortable experience for your child.",
+    definition:
+      "Pediatric dentistry addresses the unique dental needs of children, from routine check-ups to complex procedures, ensuring healthy development and a lifetime of good oral health.",
+    servicesProvided: [
+      "Space Maintainers",
+      "Dental Sealants",
+      "Fluoride Treatments",
+      "Pulp Therapy (Pulpotomy)",
+      "Dental Fillings for children",
+      "Early Orthodontic Evaluation",
+      "Emergency Dental Care",
+    ],
+    description: {
+      main: "Our pediatric dental services are designed to provide comprehensive, compassionate care for children of all ages. We use child-friendly approaches to make every visit a positive experience.",
+      child: {
+        causes: [
+          "Early childhood cavities (baby bottle tooth decay)",
+          "Prolonged thumb sucking or pacifier use affecting tooth alignment",
+          "Misaligned teeth or jaws that require early intervention",
+          "Dental trauma from falls or sports injuries",
+          "Tooth pain, swelling, or sensitivity",
+        ],
+        categoricalProcess: [
+          {
+            category: "First Visit (for toddlers)",
+            items: [
+              {
+                title: "Gentle Examination",
+                procedure:
+                  "A quick, gentle check-up to count teeth and ensure proper development, focusing on building trust with your child.",
+              },
+              {
+                title: "Parent Education",
+                procedure:
+                  "We'll discuss proper oral hygiene techniques, dietary habits, and ways to prevent common dental issues like cavities.",
+              },
+            ],
+          },
+          {
+            category: "Routine Check-up",
+            items: [
+              {
+                title: "Professional Cleaning",
+                procedure:
+                  "A thorough cleaning to remove plaque and tartar, protecting against cavities and gum disease.",
+              },
+              {
+                title: "Fluoride Treatment",
+                procedure:
+                  "Application of a professional fluoride varnish to strengthen tooth enamel and prevent decay.",
+              },
+              {
+                title: "Oral Health Assessment",
+                procedure:
+                  "A comprehensive examination to monitor jaw growth, tooth eruption, and check for any signs of dental problems.",
+              },
+            ],
+          },
+        ],
+        categoricalPrice: [
+          {
+            category: "Pediatric Dentistry",
+            items: [
+              { name: "Space Maintainers", price: "200,000" },
+              { name: "Fluoride Treatment", price: "50,000" },
+              { name: "Dental Cleaning", price: "70,000" },
+              { name: "Dental Sealants (per tooth)", price: "45,000" },
+            ],
+          },
+        ],
+        aftercareAndExpectations: [
+          "Encourage your child to brush twice daily with a pea-sized amount of fluoride toothpaste.",
+          "Limit sugary snacks and drinks, and offer healthy alternatives.",
+          "Schedule regular dental check-ups every six months for continuous monitoring and preventive care.",
+          "In case of a dental emergency, contact our office immediately for guidance.",
+        ],
+      },
+    },
+    howItIsDone:
+      "Our pediatric dentists use child-friendly techniques, including gentle chairs, fun-themed rooms, and a compassionate approach to make every visit stress-free. We focus on preventive care and education, giving your child and you the tools for a lifetime of healthy smiles.",
+    whyIsItNecessary: [
+      "**Promotes Proper Growth and Development:** Early dental care ensures that your child's jaw and teeth develop correctly, preventing future alignment issues.",
+      "**Prevents Future Oral Health Problems:** Regular check-ups and treatments like fluoride applications and sealants significantly reduce the risk of cavities and gum disease.",
+      "**Builds Lifelong Healthy Habits:** Pediatric dentists provide education on proper brushing and flossing techniques, empowering children and parents to maintain good oral hygiene for life.",
+      "**Addresses Dental Emergencies:** Having a dedicated pediatric dentist ensures you have a trusted professional to turn to in case of a dental injury or trauma.",
+      "**Detects and Manages Early Issues:** A pediatric dentist can spot early signs of issues like thumb-sucking habits, teeth grinding, or misalignment, and intervene before they become major problems.",
+    ],
+    moreImages: [spacemaintainer1, spacemaintainer2, spacemaintainer3],
   },
 };
 export default servicesData;

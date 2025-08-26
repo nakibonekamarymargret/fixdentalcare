@@ -8,6 +8,7 @@ import Faq from "./pages/Faq";
 import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
+import Widgets from "./components/layout/Widgets";
 
 const App = () => { 
   return (
@@ -24,6 +25,8 @@ const App = () => {
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
         {/* Fallback route */}
       </Routes>
+      <Widgets />
+
       <Footer />
     </Router>
   );

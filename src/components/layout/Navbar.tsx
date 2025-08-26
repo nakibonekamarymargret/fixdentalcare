@@ -53,7 +53,7 @@ const Navbar = () => {
     setMobileMenuOpen(false);
     setServicesOpen(false);
   };
-
+ 
   const bookAppointment = () => {
     navigate("/appointment");
     closeAllMenus(); // Close all menus on navigation
@@ -138,9 +138,10 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <Link to="/about-us" onClick={() => setMobileMenuOpen(false)}>
+          <Link to="/about" className={`${textColorClass} ${hoverColorClass}`}>
             About Us
           </Link>
+
           <Link
             to="/dentists"
             className={`${textColorClass} ${hoverColorClass}`}
@@ -177,7 +178,7 @@ const Navbar = () => {
           >
             Home
           </Link>
-
+ 
           <div>
             <p className="mb-1 font-semibold">Services</p>
             <div className="pl-4 space-y-1">
@@ -193,10 +194,8 @@ const Navbar = () => {
               ))}
             </div>
           </div>
-          <Link
-            to="/about-const context = useContext();"
-            onClick={() => setMobileMenuOpen(false)}
-          >
+
+          <Link to="/about" className={`${textColorClass} ${hoverColorClass}`}>
             About Us
           </Link>
           <Link to="/dentists" onClick={() => setMobileMenuOpen(false)}>
