@@ -4,6 +4,7 @@ import { User, CheckCircle, ClipboardList, Calendar } from "lucide-react";
 import DateTimeSelection from "../components/layout/Calendar";
 import BasicDetailsForm from "../components/appointments/ AppointmentForm";
 import ServiceSelection from "../components/appointments/ServiceSelection";
+
 // Type Definitions (same as before)
 type PriceOption = {
   id: string;
@@ -141,6 +142,7 @@ const Appointment = () => {
     setErrors({});
     setCurrentStep(0);
     setIsSuccess(false);
+    window.scrollTo(0, 0); // Add scroll to top on form reset
   };
 
   const handleServiceSelect = (
@@ -156,8 +158,6 @@ const Appointment = () => {
     } else {
       setSelectedPriceOption(null);
     }
-    // Remove the setCurrentStep(1) line from here.
-    // The "Next" button will now be responsible for advancing the step.
   };
 
   const sendAppointmentEmail = async () => {
@@ -177,7 +177,6 @@ const Appointment = () => {
     }
 
     setIsSubmitting(true);
-    
 
     const clientTemplateParams = {
       client_name: `${formData.firstName} ${formData.lastName}`,
@@ -215,17 +214,18 @@ const Appointment = () => {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_CLIENT_TEMPLATE_ID, // Client's NEW template ID
-        clientTemplateParams 
+        clientTemplateParams
       );
 
       // Send a separate notification email to the clinic
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_CLINIC_TEMPLATE_ID, // Clinic's NEW template ID
+        import.meta.env.VITE_EMAILJS_CLINIC_TEMPLATE_ID,
         clinicTemplateParams
       );
-      
+
       setIsSuccess(true);
+      window.scrollTo(0, 0); // Add scroll to top after successful submission
     } catch (error) {
       console.error("Failed to send email:", error);
       alert("Appointment booked, but failed to send confirmation email.");
@@ -251,10 +251,17 @@ const Appointment = () => {
       }
     }
     setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    window.scrollTo(0, 0); // Add scroll to top on next step
   };
 
   const handleGoBack = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
+    window.scrollTo(0, 0); // Add scroll to top on go back
+  };
+
+  const handleStepClick = (index: number) => {
+    setCurrentStep(index);
+    window.scrollTo(0, 0); // Add scroll to top on direct step click
   };
 
   const renderStepContent = () => {
@@ -283,7 +290,7 @@ const Appointment = () => {
             onSelectService={handleServiceSelect}
             selectedService={selectedService}
             selectedPriceOptionId={selectedPriceOption?.id || null}
-            onAdvanceStep={() => setCurrentStep((prev) => prev + 1)}
+            onAdvanceStep={handleNext} // Use the modified handleNext function
           />
         );
       case 1:
@@ -295,7 +302,7 @@ const Appointment = () => {
             }}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
-            onAdvanceStep={() => setCurrentStep((prev) => prev + 1)}
+            onAdvanceStep={handleNext} // Use the modified handleNext function
           />
         );
       case 2:
@@ -359,7 +366,7 @@ const Appointment = () => {
                       }
                       ${index < currentStep ? "bg-sky-100 text-sky-800" : ""}
                     `}
-                    onClick={() => setCurrentStep(index)}
+                    onClick={() => handleStepClick(index)} // Use the new handler
                   >
                     <step.icon size={20} className="mr-3" />
                     <span className="font-medium">{step.name}</span>

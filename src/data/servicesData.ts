@@ -7,8 +7,13 @@ import examination5 from "../assets/images/examination5.jpeg";
 import scaling from "../assets/images/preventive1.jpeg";
 import preventive2 from "../assets/images/scaling1.jpeg";
 import rootCanalImg from "../assets/images/rootcanal.jpeg";
-import rootCanalCause from "../assets/images/rootcanal2.jpeg";
-import rootCanalPrevention from "../assets/images/rootcanal2.jpeg";
+import rootCanal1 from "../assets/images/rootcanal1.jpg";
+import rootCanal2 from "../assets/images/rootcanal2.jpeg";
+import rootCanal3 from "../assets/images/rootcanal3.jpeg";
+import rootCanal5 from "../assets/images/rootcanal5.jpeg";
+import rootCanal6 from "../assets/images/rootcanal6.jpeg";
+import rootCanal7 from "../assets/images/rootcanal7.jpeg";
+
 
 import crowns from "../assets/images/crownfix.jpeg";
 import crownprocedure from "../assets/images/crownprocedure.jpeg";
@@ -687,7 +692,7 @@ export const servicesData: Record<string, Service> = {
       "The treatment is performed under local anesthesia. The dentist removes the infected pulp, disinfects the area, fills the canal, and then seals the tooth with a filling and a crown. The procedure is painless and is designed to save your natural tooth.",
     whyIsItNecessary:
 [      "A root canal is necessary to save a tooth that is badly infected or decayed. If left untreated, the infection can spread to other teeth and the jawbone, leading to severe pain and potential tooth loss. Saving the tooth prevents the need for an extraction and the subsequent costs and complications of a dental implant or bridge.",
-]  ,  moreImages: [rootCanalImg, rootCanalPrevention, rootCanalCause],
+]  ,  moreImages: [rootCanalImg, rootCanal1, rootCanal2, rootCanal3, rootCanal5, rootCanal6, rootCanal7],
   },
 
   crowns: {
@@ -945,99 +950,6 @@ export const servicesData: Record<string, Service> = {
 [      "Pediatric dentistry is essential for ensuring healthy dental development in children, preventing cavities, correcting habits like thumb sucking, and detecting orthodontic issues early to avoid complications later in life.",
 ],    moreImages: [spacemaintainer1, spacemaintainer2, spacemaintainer3],
   },
-  "pediatric-specialtie": {
-    title: "Pediatric Specialtie",
-    slug: "pediatric-specialtie",
-    image: pediatric,
-    introduction:
-      "Pediatric dentistry focuses on the oral health of children from infancy through adolescence. It includes preventive care, treatment of dental issues, and education for parents and children, ensuring a positive and comfortable experience for your child.",
-    definition:
-      "Pediatric dentistry addresses the unique dental needs of children, from routine check-ups to complex procedures, ensuring healthy development and a lifetime of good oral health.",
-    servicesProvided: [
-      "Space Maintainers",
-      "Dental Sealants",
-      "Fluoride Treatments",
-      "Pulp Therapy (Pulpotomy)",
-      "Dental Fillings for children",
-      "Early Orthodontic Evaluation",
-      "Emergency Dental Care",
-    ],
-    description: {
-      main: "Our pediatric dental services are designed to provide comprehensive, compassionate care for children of all ages. We use child-friendly approaches to make every visit a positive experience.",
-      child: {
-        causes: [
-          "Early childhood cavities (baby bottle tooth decay)",
-          "Prolonged thumb sucking or pacifier use affecting tooth alignment",
-          "Misaligned teeth or jaws that require early intervention",
-          "Dental trauma from falls or sports injuries",
-          "Tooth pain, swelling, or sensitivity",
-        ],
-        categoricalProcess: [
-          {
-            category: "First Visit (for toddlers)",
-            items: [
-              {
-                title: "Gentle Examination",
-                procedure:
-                  "A quick, gentle check-up to count teeth and ensure proper development, focusing on building trust with your child.",
-              },
-              {
-                title: "Parent Education",
-                procedure:
-                  "We'll discuss proper oral hygiene techniques, dietary habits, and ways to prevent common dental issues like cavities.",
-              },
-            ],
-          },
-          {
-            category: "Routine Check-up",
-            items: [
-              {
-                title: "Professional Cleaning",
-                procedure:
-                  "A thorough cleaning to remove plaque and tartar, protecting against cavities and gum disease.",
-              },
-              {
-                title: "Fluoride Treatment",
-                procedure:
-                  "Application of a professional fluoride varnish to strengthen tooth enamel and prevent decay.",
-              },
-              {
-                title: "Oral Health Assessment",
-                procedure:
-                  "A comprehensive examination to monitor jaw growth, tooth eruption, and check for any signs of dental problems.",
-              },
-            ],
-          },
-        ],
-        categoricalPrice: [
-          {
-            category: "Pediatric Dentistry",
-            items: [
-              { name: "Space Maintainers", price: "200,000" },
-              { name: "Fluoride Treatment", price: "50,000" },
-              { name: "Dental Cleaning", price: "70,000" },
-              { name: "Dental Sealants (per tooth)", price: "45,000" },
-            ],
-          },
-        ],
-        aftercareAndExpectations: [
-          "Encourage your child to brush twice daily with a pea-sized amount of fluoride toothpaste.",
-          "Limit sugary snacks and drinks, and offer healthy alternatives.",
-          "Schedule regular dental check-ups every six months for continuous monitoring and preventive care.",
-          "In case of a dental emergency, contact our office immediately for guidance.",
-        ],
-      },
-    },
-    howItIsDone:
-      "Our pediatric dentists use child-friendly techniques, including gentle chairs, fun-themed rooms, and a compassionate approach to make every visit stress-free. We focus on preventive care and education, giving your child and you the tools for a lifetime of healthy smiles.",
-    whyIsItNecessary: [
-      "**Promotes Proper Growth and Development:** Early dental care ensures that your child's jaw and teeth develop correctly, preventing future alignment issues.",
-      "**Prevents Future Oral Health Problems:** Regular check-ups and treatments like fluoride applications and sealants significantly reduce the risk of cavities and gum disease.",
-      "**Builds Lifelong Healthy Habits:** Pediatric dentists provide education on proper brushing and flossing techniques, empowering children and parents to maintain good oral hygiene for life.",
-      "**Addresses Dental Emergencies:** Having a dedicated pediatric dentist ensures you have a trusted professional to turn to in case of a dental injury or trauma.",
-      "**Detects and Manages Early Issues:** A pediatric dentist can spot early signs of issues like thumb-sucking habits, teeth grinding, or misalignment, and intervene before they become major problems.",
-    ],
-    moreImages: [spacemaintainer1, spacemaintainer2, spacemaintainer3],
-  },
+
 };
 export default servicesData;

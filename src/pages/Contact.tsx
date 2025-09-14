@@ -2,8 +2,11 @@ import { IoTimeOutline } from "react-icons/io5";
 import { IoMdCall } from "react-icons/io";
 import { CiMail } from "react-icons/ci";
 import { IoLocationSharp } from "react-icons/io5";
+import { Button } from "../components/ui/button";
+import { BsWhatsapp } from "react-icons/bs";
 
 const Contact = () => {
+ 
   return (
     <div className="w-full min-h-screen bg-white">
       {/* Hero Section */}
@@ -34,8 +37,6 @@ const Contact = () => {
           <h4 className="text-blue-600 uppercase mb-2 text-center md:text-left">
             Get In Touch
           </h4>
-          
-
           <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-gray-800">
             Exceptional Service With a <br /> Personal Touch
           </h3>
@@ -44,33 +45,80 @@ const Contact = () => {
             please fill out the form and we'll respond as soon as possible.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <h5 className="font-semibold text-gray-800">We're Open</h5>
-              <p className="text-gray-600 text-sm">
-                <IoTimeOutline className="inline mr-2" />
-                Monday - Friday 08:00 - 18:00
-              </p>
+            {/* We're Open */}
+            <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="bg-blue-600 p-3 rounded-full text-white">
+                <IoTimeOutline className="text-2xl" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800">
+                  We're Open
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Mon - Sat: 8:00 AM - 10:00 PM <br />
+                  Sun: 9:00 AM - 7:00 PM
+                </p>
+              </div>
             </div>
-            <div>
-              <h5 className="font-semibold text-gray-800">Clinic Location</h5>
-              <p className="text-gray-600 text-sm">
-                <IoLocationSharp className="inline mr-2" />
-                100 S Main St, New York, NY
-              </p>
+
+            {/* Clinic Location */}
+            <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="bg-blue-600 p-3 rounded-full text-white">
+                <IoLocationSharp className="text-2xl" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800">
+                  Clinic Location
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Naalya heights along Naalya-Namugongo Road near Children's
+                  clinic
+                </p>
+              </div>
             </div>
-            <div>
-              <h5 className="font-semibold text-gray-800">Call Us</h5>
-              <p className="text-gray-600 text-sm">
-                <IoMdCall className="inline mr-2" />
-                +1 123 456 789
-              </p>
+
+            {/* Call Us */}
+            <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="bg-blue-600 p-3 rounded-full text-white">
+                <IoMdCall className="text-2xl" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800">Call Us</h4>
+                <p className="text-sm text-gray-600">
+                  0772359837 | 0782569390 | 0764043489
+                </p>
+              </div>
             </div>
-            <div>
-              <h5 className="font-semibold text-gray-800">Email Us</h5>
-              <p className="text-gray-600 text-sm">
-                <CiMail className="inline mr-2" />
-                contact@dentiacare.com
-              </p>
+
+            {/* Text Us on WhatsApp */}
+            <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="bg-blue-600 p-3 rounded-full text-white">
+                <BsWhatsapp className="text-2xl" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800">
+                  Text Us on WhatsApp
+                </h4>
+                <p className="text-sm text-gray-600">0700298499</p>
+              </div>
+            </div>
+
+            {/* Send a Message (Email) */}
+            <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="bg-blue-600 p-3 rounded-full text-white">
+                <CiMail className="text-2xl" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg text-gray-800">
+                  Send a Message
+                </h4>
+                <a
+                  href="mailto:fixdentalc@gmail.com"
+                  className="text-sm text-gray-600 hover:text-blue-600 underline"
+                >
+                  fixdentalc@gmail.com
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -80,60 +128,77 @@ const Contact = () => {
           <h4 className="text-xl font-semibold mb-6 text-gray-800">
             Send a Message
           </h4>
-
-          <form>
+          <form >
             <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-700 mb-1">
+              <label
+                htmlFor="name"
+                className="block text-gray-700 mb-1 font-medium"
+              >
                 Name
               </label>
               <input
                 type="text"
                 id="name"
+                name="user_name" // Use name attribute for EmailJS
                 placeholder="Your Name"
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 mb-1 font-medium"
+              >
                 Email
               </label>
               <input
                 type="email"
                 id="email"
+                name="user_email" // Use name attribute for EmailJS
                 placeholder="Your Email"
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="phone" className="block text-gray-700 mb-1">
+              <label
+                htmlFor="phone"
+                className="block text-gray-700 mb-1 font-medium"
+              >
                 Phone
               </label>
               <input
                 type="tel"
                 id="phone"
+                name="user_phone" // Use name attribute for EmailJS
                 placeholder="Your Phone Number"
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="message" className="block text-gray-700 mb-1">
+              <label
+                htmlFor="message"
+                className="block text-gray-700 mb-1 font-medium"
+              >
                 Message
               </label>
               <textarea
                 id="message"
+                name="message"
                 placeholder="Your Message"
                 className="w-full p-3 border border-gray-300 rounded h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
             </div>
-            <button
+            <Button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition duration-300"
+              className="w-full py-3 rounded transition duration-300"
             >
               Send Message
-            </button>
+            </Button>
           </form>
         </div>
       </div>
+
+      {/* Render the modal */}
     </div>
   );
 };

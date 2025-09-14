@@ -1,5 +1,3 @@
-import React from "react";
-
 // Type Definitions (moved from Appointment.tsx)
 type FormData = {
   firstName: string;

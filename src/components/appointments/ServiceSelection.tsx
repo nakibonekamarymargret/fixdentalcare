@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import ServiceCard from "./ServiceCard";
 import { servicesData } from "../../data/servicesData";
@@ -41,12 +42,11 @@ const ServiceSelection = ({
   selectedPriceOptionId,
   onAdvanceStep,
 }: ServiceSelectionProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-
   const categories: Category[] = [{ id: "all", name: "ALL" }];
   const allServices: Service[] = [];
+  let initialCategory = "all"; // Default to "all" in case no specific category is found
 
-  // Iterate over each main service group (e.g., "General Dentistry", "Orthodontics")
+  // Iterate over each main service group to populate services and categories
   Object.values(servicesData).forEach((serviceCategory) => {
     if (!serviceCategory?.title) return;
 
@@ -54,25 +54,25 @@ const ServiceSelection = ({
     const categoryId = createServiceId(categoryName);
     categories.push({ id: categoryId, name: categoryName });
 
-    // Use a temporary map to store services for the current category,
-    // this prevents duplicate service names from overwriting each other
-    // within the same category (e.g. if a service name appears twice in one category)
+    // Set the initial category to 'consultation' if found
+    if (categoryName.toLowerCase().includes("consultation")) {
+      initialCategory = categoryId;
+    }
+
     const categoryServices = new Map<string, Service>();
 
-    // Process adult services
     const adultPriceCategories =
       serviceCategory.description?.adult?.categoricalPrice || [];
     adultPriceCategories.forEach((cat) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cat.items.forEach((item: any) => {
         const serviceName = item.name;
         const servicePrice = item.price.toString();
-
-        // Create a unique key by combining category and service name
         const uniqueKey = `${categoryId}-${createServiceId(serviceName)}`;
 
         if (!categoryServices.has(uniqueKey)) {
           categoryServices.set(uniqueKey, {
-            id: uniqueKey, // The service ID is now globally unique
+            id: uniqueKey,
             name: serviceName,
             category: categoryName,
             priceOptions: [],
@@ -86,20 +86,17 @@ const ServiceSelection = ({
       });
     });
 
-    // Process child services
     const childPriceCategories =
       serviceCategory.description?.child?.categoricalPrice || [];
     childPriceCategories.forEach((cat) => {
       cat.items.forEach((item: any) => {
         const serviceName = item.name;
         const servicePrice = item.price.toString();
-
-        // Create a unique key by combining category and service name
         const uniqueKey = `${categoryId}-${createServiceId(serviceName)}`;
 
         if (!categoryServices.has(uniqueKey)) {
           categoryServices.set(uniqueKey, {
-            id: uniqueKey, // The service ID is now globally unique
+            id: uniqueKey,
             name: serviceName,
             category: categoryName,
             priceOptions: [],
@@ -113,9 +110,12 @@ const ServiceSelection = ({
       });
     });
 
-    // Push all services for this category into the main array
     allServices.push(...Array.from(categoryServices.values()));
   });
+
+  // Set the initial state based on the calculated initialCategory
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(initialCategory);
 
   // Sort categories alphabetically
   categories.sort((a, b) => a.name.localeCompare(b.name));
@@ -158,7 +158,7 @@ const ServiceSelection = ({
             onChange={handleCategoryChange}
           >
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
+              <option key={category.id} value={category.id} className="uppercase">
                 {category.name}
               </option>
             ))}
@@ -180,8 +180,6 @@ const ServiceSelection = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredServices.map((service) => (
           <ServiceCard
-            // This key is now truly unique because the service.id itself
-            // is a combination of category and service name.
             key={service.id}
             service={service}
             selectedService={selectedService}

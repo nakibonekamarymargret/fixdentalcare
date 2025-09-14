@@ -1,18 +1,18 @@
-import  { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IoIosArrowDown } from "react-icons/io";
-import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
+import { IoMdMenu } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 const services = [
-  { _id: "1", name: "Root Canal", slug: "root-canal" },
+  { _id: "1", name: "Root Canal Treatment", slug: "root-canal" },
   {
     _id: "2",
     name: "Cosmetic Dentistry",
     slug: "cosmetic-dentistry",
-    },
-  { _id: "3", name: "Braces", slug: "braces" },
+  },
+  { _id: "3", name: "Dental Crowns", slug: "crowns" },
+  { _id: "4", name: "All Services", slug: "" },
 ];
-
 
 const Navbar = () => {
   const location = useLocation();
@@ -27,7 +27,6 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        // Adjust scroll threshold as needed
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -39,128 +38,179 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleMouseEnter = (type: string) => {
+  const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (type === "services") setServicesOpen(true);
+    setServicesOpen(true);
   };
 
-  const handleMouseLeave = (type: string) => {
+  const handleMouseLeave = () => {
     timeoutRef.current = window.setTimeout(() => {
-      if (type === "services") setServicesOpen(false);
+      setServicesOpen(false);
     }, 200);
   };
+
   const closeAllMenus = () => {
     setMobileMenuOpen(false);
     setServicesOpen(false);
   };
- 
+
   const bookAppointment = () => {
     navigate("/appointment");
-    closeAllMenus(); // Close all menus on navigation
+    closeAllMenus();
   };
-  // Define dynamic classes based on home page and scroll state
+
+  const getNavLinkClass = (path: string) => {
+    const isActive = location.pathname === path;
+    const isSpecialCase =
+      location.pathname.startsWith("/services") && path === "/services";
+
+    const baseClass =
+      isHomePage && !isScrolled
+        ? "text-white hover:text-blue-200"
+        : "text-gray-700 hover:text-[#2e2976]";
+
+    const activeClass =
+      isHomePage && !isScrolled
+        ? "text-blue-200 font-bold"
+        : "text-[#2e2976] font-bold";
+
+    if (isActive || isSpecialCase) {
+      return `${baseClass} ${activeClass}`;
+    }
+    return baseClass;
+  };
+
   const navbarBgClass =
     isHomePage && !isScrolled
-      ? "bg-transparent absolute top-0 inset-x-0" // Transparent on top of home hero
-      : "bg-[#f2f5fa] shadow-md relative"; // Solid background on other pages or when scrolled
-
+      ? "bg-transparent absolute top-0 inset-x-0"
+      : "bg-[#f2f5fa] shadow-md relative";
   const textColorClass =
-    isHomePage && !isScrolled
-      ? "text-white" // White text on top of home hero
-      : "text-gray-700"; // Dark text on other pages or when scrolled
-
+    isHomePage && !isScrolled ? "text-white" : "text-gray-700";
   const logoColorClass =
     isHomePage && !isScrolled ? "text-white" : "text-[#2e2976]";
 
-  
   const hoverColorClass =
-    isHomePage && !isScrolled
-      ? "hover:text-blue-200" // Lighter hover for white text
-      : "hover:text-[#2e2976]"; // Darker hover for dark text
+    isHomePage && !isScrolled ? "hover:text-blue-200" : "hover:text-[#2e2976]";
+
+  // const MenuIcon = () => (
+  //   <svg
+  //     xmlns="http://www.w3.org/2000/svg"
+  //     fill="none"
+  //     viewBox="0 0 24 24"
+  //     strokeWidth={1.5}
+  //     stroke="currentColor"
+  //     className="w-8 h-8"
+  //   >
+  //     <path
+  //       strokeLinecap="round"
+  //       strokeLinejoin="round"
+  //       d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+  //     />
+  //   </svg>
+  // );
+
+ 
+
+  const ArrowIcon = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-4 h-4"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+      />
+    </svg>
+  );
 
   return (
     <nav
       className={`w-full fixed top-0 z-50 font-[Roboto] transition-all duration-300 ${navbarBgClass}`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <Link
-          to="/"
-          className={`flex items-center gap-2 font-extrabold text-2xl ${logoColorClass}`}
-        >
-          <img className="w-70" src="/logo.png" alt="" />
-        </Link>
-        {/* Mobile Toggle */}
-        <button
-          className="lg:hidden focus:outline-none"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-          aria-expanded={mobileMenuOpen}
-        >
-          {mobileMenuOpen ? (
-            <HiX className="text-3xl text-[#2e2976]" />
-          ) : (
-            <HiMenuAlt3 className="text-3xl text-[#2e2976]" />
-          )}
-        </button>
-
-        {/* Desktop Nav */}
-        <div
-          className={`flex gap-8 text-lg font-semibold ${textColorClass} items-center`}
-        >
-          <Link to="/" className={`${textColorClass} ${hoverColorClass}`}>
-            Home
+        {/* Logo and Desktop Nav */}
+        <div className="flex items-center">
+          <Link
+            to="/"
+            className={`flex items-center gap-2 font-extrabold md:text-3xl text-2xl ${logoColorClass}`}
+          >
+            <img className="w-70" src="/logo.png" alt="Logo" />
           </Link>
 
-          {/* Services Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("services")}
-            onMouseLeave={() => handleMouseLeave("services")}
+          {/* Desktop Nav - Hidden on small screens */}
+          <div className={`hidden lg:flex gap-8 text-lg sm:text-xl md:text-2xl lg:text-lg font-semibold   ${textColorClass} items-center ml-10`}
           >
-            <button
-              className={`${textColorClass} ${hoverColorClass} flex items-center gap-1 transition`}
+            <Link to="/" className={`${textColorClass}  ${hoverColorClass}`}>
+              Home
+            </Link>
+            <div
+              className="relative"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              Services <IoIosArrowDown />
-            </button>
-            {servicesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-56 bg-white border shadow-md rounded-md z-50">
-                {services.map((s) => (
-                  <Link
-                    key={s._id}
-                    to={`/services/${s.slug}`}
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
-                    onClick={() => setServicesOpen(false)}
-                  >
-                    {s.name}
-                  </Link>
-                ))}
-              </div>
-            )}
+              <button
+                className={`${getNavLinkClass("/services")} flex items-center gap-1 transition text-lg sm:text-xl md:text-2xl lg:text-lg font-semibold   ${textColorClass} items-center ml-10}`}
+              >
+                Services <ArrowIcon />
+              </button> 
+              {servicesOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white border shadow-md rounded-md z-50">
+                  {services.map((s) => (
+                    <Link
+                      key={s._id}
+                      to={`/services/${s.slug}`}
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      {s.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+            <Link to="/about-us" className={getNavLinkClass("/about-us")}>
+              About Us
+            </Link>
+            <Link to="/gallery" className={getNavLinkClass("/gallery")}>
+              Gallery
+            </Link>
+            <Link to="/contact" className={getNavLinkClass("/contact")}>
+              Contact
+            </Link>
           </div>
-          <Link to="/about" className={`${textColorClass} ${hoverColorClass}`}>
-            About Us
-          </Link>
+        </div>
 
-          <Link
-            to="/dentists"
-            className={`${textColorClass} ${hoverColorClass}`}
-          >
-            Dentists
-          </Link>
-
-          {/* <Link to="/blog" className={`${textColorClass} ${hoverColorClass}`}>
-            Blog
-          </Link> */}
-          <Link
-            to="/contact"
-            className={`${textColorClass} ${hoverColorClass}`}
-          >
-            Contact
-          </Link>
-
+        {/* Desktop and Mobile Book Appointment Button */}
+        <div className="hidden lg:block lg:ml-4">
           <Button
-            className={`${textColorClass} ml-4  hover:bg-sky-600 text-white transition`}
+            className={`${textColorClass} hover:bg-blue-900 text-white transition`}
+            onClick={bookAppointment}
+          >
+            Book Appointment
+          </Button>
+        </div>
+
+        {/* Mobile Nav - Visible on small screens */}
+        <div className="flex items-center lg:hidden gap-2">
+          <button
+            className="focus:outline-none text-[#2e2976]"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? (
+              <IoClose size={30} />
+            ) : (
+              <IoMdMenu size={24} className="text-black" />
+            )}
+          </button>
+          <Button
+            className="mr-4  hover:bg-blue-900 text-white transition"
             onClick={bookAppointment}
           >
             Book Appointment
@@ -170,7 +220,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#f2f5fa] px-6 pb-6 space-y-4 text-base text-[#2e2976] font-medium">
+        <div className="lg:hidden bg-[#f2f5fa] px-6 pb-6 space-y-4 text-base text-[#2e2976] font-medium transition-all duration-300">
           <Link
             to="/"
             onClick={() => setMobileMenuOpen(false)}
@@ -178,7 +228,6 @@ const Navbar = () => {
           >
             Home
           </Link>
- 
           <div>
             <p className="mb-1 font-semibold">Services</p>
             <div className="pl-4 space-y-1">
@@ -194,27 +243,27 @@ const Navbar = () => {
               ))}
             </div>
           </div>
-
-          <Link to="/about" className={`${textColorClass} ${hoverColorClass}`}>
+          <Link
+            to="/about-us"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block hover:underline"
+          >
             About Us
           </Link>
-          <Link to="/dentists" onClick={() => setMobileMenuOpen(false)}>
-            Dentists
+          <Link
+            to="/gallery"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block hover:underline"
+          >
+            Gallery
           </Link>
-
-          <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>
-            Blog
-          </Link>
-          <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+          <Link
+            to="/contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block hover:underline"
+          >
             Contact
           </Link>
-
-          <Button
-            className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
-            onClick={bookAppointment}
-          >
-            Book Appointment
-          </Button>
         </div>
       )}
     </nav>

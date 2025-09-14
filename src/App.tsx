@@ -9,10 +9,14 @@ import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
 import Widgets from "./components/layout/Widgets";
+import Testimonials from "./pages/Testimonials";
+import Gallery from "./pages/Gallery";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => { 
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
 
       <Routes>
@@ -21,8 +25,12 @@ const App = () => {
         <Route path="/about-us" element={<About />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/gallery" element={<Gallery />} />
+
         <Route path="/services" element={<Services />} />
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+
         {/* Fallback route */}
       </Routes>
       <Widgets />

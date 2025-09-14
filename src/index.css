@@ -33,40 +33,24 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.125rem;   /* text-lg → 18px */
-    line-height: 1.75;     /* more breathing room */
+    font-family: 'Open Sans', sans-serif; /* Set base font for all text */
+    font-size: 1rem;
+    line-height: 1.75;
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif; /* Apply headline font specifically */
     font-weight: 700;
     color: var(--color-primary);
   }
 
-  h1 {
-    font-size: 3rem;    /* text-5xl → bigger impact */
-    line-height: 1.2;
-  }
-
-  h2 {
-    font-size: 2.25rem; /* text-4xl */
-    line-height: 1.3;
-  }
-
-  h3 {
-    font-size: 1.75rem; /* text-2xl → bumped */
-    line-height: 1.4;
-  }
-
   p {
-    font-size: 1.125rem; /* text-lg instead of text-base */
     line-height: 1.75;
     color: var(--color-muted-foreground);
   }
 
   small {
-    font-size: 1rem;  /* bumped from 0.875rem */
+    font-size: 1rem;
     color: var(--color-muted-foreground);
   }
 
@@ -81,19 +65,17 @@
 
   button {
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
   }
 }
 
 /* Custom Classes */
 .custom-tagline {
   font-family: 'Satisfy', cursive;
-  font-size: 1.5rem;  /* bigger tagline */
+  font-size: 1.5rem;
   color: var(--color-accent);
 }
 
 .custom-link {
-  font-size: 1.125rem; /* bumped */
   font-family: 'Open Sans', sans-serif;
   color: var(--color-primary);
   text-decoration: none;
@@ -113,6 +95,7 @@
   --color-primary: #1c65a0;
   --color-accent: #7f807b;
 }
+
 .widget {
   @apply w-12 h-12 rounded-full flex items-center justify-center text-white text-xl shadow-lg transition-transform duration-200;
 }

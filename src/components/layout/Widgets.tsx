@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FaInstagram,
   // FaLocationArrow,
@@ -44,14 +43,14 @@ const Widgets = () => {
 
       {/* Location (Google Maps) */}
       <a
-  href="https://www.google.com/maps/dir/?api=1&destination=Fix+Dental+Care,+Buganda+Road,+Kampala,+Uganda"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="widget bg-red-500"
-  title="Find us on Maps"
->
-  <IoLocation className="text-2xl text-white" />
-</a>
+        href="https://maps.app.goo.gl/Cp6jydL3HoabYgNc9"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="widget bg-red-500"
+        title="Find us on Maps"
+      >
+        <IoLocation className="text-2xl text-white" />
+      </a>
       {/* Instagram */}
       <a
         href="https://instagram.com/fix_dentalcare"

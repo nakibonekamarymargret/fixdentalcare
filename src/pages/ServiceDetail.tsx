@@ -1,16 +1,83 @@
 // ... (imports remain the same)
-import React from "react";
+import  { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams, Link } from "react-router-dom";
 import { servicesData } from "../data/servicesData";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import { Button } from "../components/ui/button";
+
+// ImageModal Component - will be updated next
+const ImageModal = ({
+  imageUrl,
+  onClose,
+  images,
+  onNavigate,
+}: {
+  imageUrl: string;
+  onClose: () => void;
+  images: string[];
+  currentImageIndex: number;
+  onNavigate: (direction: "prev" | "next") => void;
+}) => {
+  if (!imageUrl) return null;
+
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-w-5xl max-h-full bg-white rounded-lg shadow-xl flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-white bg-gray-800 rounded-full p-2 text-xl hover:bg-gray-700 transition-colors z-10"
+          aria-label="Close"
+        >
+          &times;
+        </button>
+
+        {/* Previous Button */}
+        {images.length > 1 && (
+          <button
+            onClick={() => onNavigate("prev")}
+            className="absolute bottom-4 left-4 z-10 text-white text-4xl bg-gray-800 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-colors"
+            aria-label="Previous Image"
+          >
+            &#8249;
+          </button>
+        )}
+
+        <img
+          src={imageUrl}
+          alt="Enlarged Service Detail"
+          className="max-w-full max-h-[90vh] object-contain rounded-lg"
+        />
+
+        {/* Next Button */}
+        {images.length > 1 && (
+          <button
+            onClick={() => onNavigate("next")}
+            className="absolute bottom-4 right-4 z-10 text-white text-4xl bg-gray-800 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-colors"
+            aria-label="Next Image"
+          >
+            &#8250;
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default function ServiceDetail() {
   const { serviceId } = useParams<{ serviceId: string }>();
   const service = servicesData[serviceId || ""];
   const navigate = useNavigate();
+
+  // New state to manage the index of the selected image
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -20,12 +87,40 @@ export default function ServiceDetail() {
     return <div className="p-8 text-red-600">Service not found.</div>;
   }
   const allServices = Object.values(servicesData);
-  
+
   const bookAppointment = () => {
-   navigate("/appointment");
- }
-  // A helper function to render the price section
-  const renderPriceSection = (details: { price?: string; categoricalPrice?: { category: string; items: { name: string; price: string }[] }[] }) => {
+    navigate("/appointment");
+  };
+
+  const openImageModal = (index: number) => {
+    setSelectedImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsModalOpen(false);
+    setSelectedImageIndex(-1);
+  };
+
+  const handleNavigate = (direction: "prev" | "next") => {
+    const totalImages = (service.moreImages ?? []).length;
+    let newIndex = selectedImageIndex;
+    if (direction === "next") {
+      newIndex = (selectedImageIndex + 1) % totalImages;
+    } else if (direction === "prev") {
+      newIndex = (selectedImageIndex - 1 + totalImages) % totalImages;
+    }
+    setSelectedImageIndex(newIndex);
+  };
+
+  // Helper functions remain the same...
+  const renderPriceSection = (details: {
+    price?: string;
+    categoricalPrice?: {
+      category: string;
+      items: { name: string; price: string }[];
+    }[];
+  }) => {
     if (details.price) {
       return (
         <div className="flex justify-between items-center bg-white p-3 rounded-md mt-4">
@@ -34,47 +129,64 @@ export default function ServiceDetail() {
         </div>
       );
     }
-
     if (details.categoricalPrice && details.categoricalPrice.length > 0) {
       return (
         <div className="mt-4">
-          {details.categoricalPrice.map((cat: { category: string; items: { name: string; price: string }[] }, catIndex: number) => (
-            <div key={catIndex} className="bg-white p-3 rounded-md mb-2">
-              <h6 className="font-semibold text-gray-700 mb-2">
-                {cat.category}
-              </h6>
-              <ul className="list-none space-y-1">
-                {cat.items.map((item: { name: string; price: string }, itemIndex: number) => (
-                  <li
-                    key={itemIndex}
-                    className="flex justify-start text-sm gap-2 text-blue-700"
-                  >
-                    <span>{item.name}</span>
-                    <span className=" text-black bold">UGX {item.price}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {details.categoricalPrice.map(
+            (
+              cat: {
+                category: string;
+                items: { name: string; price: string }[];
+              },
+              catIndex: number
+            ) => (
+              <div key={catIndex} className="bg-white p-3 rounded-md mb-2">
+                <h6 className="font-semibold text-gray-700 mb-2">
+                  {cat.category}
+                </h6>
+                <ul className="list-none space-y-1">
+                  {cat.items.map(
+                    (
+                      item: { name: string; price: string },
+                      itemIndex: number
+                    ) => (
+                      <li
+                        key={itemIndex}
+                        className="flex justify-start text-base gap-2 text-blue-700"
+                      >
+                        <span className="text-base font-medium">
+                          {item.name}
+                        </span>
+                        <span className="text-base text-black font-bold">
+                          {" "}
+                          UGX {item.price}
+                        </span>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            )
+          )}
         </div>
       );
     }
-
     return null;
   };
- function getCategoryHeading(categoryKey: "adult" | "child") {
-   const desc = service.description[categoryKey];
-   if (desc?.categoricalPrice && desc.categoricalPrice.length > 0) {
-     return desc.categoricalPrice[0].category;
-   }
-   // Fallback titles
-   return categoryKey === "adult" ? "Adults" : "Children";
- }
+
+  function getCategoryHeading(categoryKey: "adult" | "child") {
+    const desc = service.description[categoryKey];
+    if (desc?.categoricalPrice && desc.categoricalPrice.length > 0) {
+      return desc.categoricalPrice[0].category;
+    }
+    return categoryKey === "adult" ? "Adults" : "Children";
+  }
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       <div className="w-full md:w-1/4 bg-blue-50 p-6 shadow-md">
         <h3 className="text-xl font-bold mb-4">Service List</h3>
-        <ul className="space-y-2  rounded-full">
+        <ul className="space-y-2 rounded-full">
           {allServices.map((s) => (
             <li key={s.title} className="mb-2">
               <Link
@@ -103,22 +215,22 @@ export default function ServiceDetail() {
           transition={{ duration: 0.5 }}
           className="max-w-4xl mx-auto"
         >
-          {/* Main Image */}
-          <div className="relative">
-            <img
-              src={service.image}
-              alt={service.title}
-              className="w-full max-w-xl mx-auto rounded-lg mb-6 shadow-lg object-contain"
-            />
-          </div>
-          <h2 className="text-4xl font-bold mb-4 border-b-2 pb-2">
-            {service.title}
-          </h2>
+          {/* ... (other sections remain the same) ... */}
           <div className="space-y-6">
+            <div className="relative w-full h-[400px] md:h-[500px] mb-6 rounded-lg shadow-lg overflow-hidden">
+              <img
+                src={service.image}
+                alt={service.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h2 className="text-4xl font-bold mb-4 border-b-2 pb-2">
+              {service.title}
+            </h2>
             <p className="text-lg text-gray-700 font-medium">
               {service.definition}
             </p>
-            {/* Major services provides */}
+            {/* Major services provided */}
             {service.servicesProvided &&
               service.servicesProvided.length > 0 && (
                 <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
@@ -143,19 +255,14 @@ export default function ServiceDetail() {
                 <p className="text-gray-700 mt-4">{service.description.main}</p>
               )}
             </div>
-
-            {/* Adults vs. Children Details Section */}
             <h4 className="text-2xl font-semibold ">Service Details</h4>
-
             {(() => {
               const hasAdult = Boolean(service.description.adult);
               const hasChild = Boolean(service.description.child);
               const columns =
                 hasAdult && hasChild ? "grid-cols-2" : "grid-cols-1";
-
               return (
                 <div className={`grid grid-cols-1 ${columns} gap-4 mt-6`}>
-                  {/* Adult Section */}
                   {hasAdult && (
                     <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
                       {service.description.adult && (
@@ -163,16 +270,14 @@ export default function ServiceDetail() {
                           <h5 className="text-lg font-bold text-gray-800 mb-4">
                             {getCategoryHeading("adult")} in adults
                           </h5>
-
                           <div className="space-y-4 text-sm">
-                            {/* causes  */}
                             {service.description.adult.causes &&
                               service.description.adult.causes.length > 0 && (
                                 <div>
-                                  <h6 className="font-semibold text-gray-700 text-[20px]">
+                                  <h6 className="font-semibold text-gray-700 text-lg">
                                     Causes{" "}
                                   </h6>
-                                  <ul className="list-disc list-inside ml-4 text-[18px]">
+                                  <ul className="list-disc list-inside ml-4 text-base">
                                     {service.description.adult.causes.map(
                                       (c, i) => (
                                         <li key={i}>{c}</li>
@@ -181,17 +286,16 @@ export default function ServiceDetail() {
                                   </ul>
                                 </div>
                               )}
-                            {/* Process (flat or categorical) */}
                             {Array.isArray(
                               service.description.adult?.process ?? []
                             ) &&
                               (service.description.adult.process ?? []).length >
                                 0 && (
                                 <div className="space-y-4 mt-8">
-                                  <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                  <h5 className="font-semibold text-blue-600 text-lg">
                                     Procedure at FIX Dental Care
                                   </h5>
-                                  <ol className="list-decimal list-inside ml-4 space-y-2">
+                                  <ol className="list-decimal list-inside ml-4 space-y-2 text-base leading-relaxed">
                                     {(
                                       service.description.adult.process ?? []
                                     ).map((p, i) => (
@@ -200,13 +304,12 @@ export default function ServiceDetail() {
                                   </ol>
                                 </div>
                               )}
-
                             {(
                               service.description.adult?.categoricalProcess ??
                               []
                             ).length > 0 && (
                               <div className="space-y-4 mt-8">
-                                <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                <h5 className="font-semibold text-blue-600 text-lg">
                                   Procedure at FIXED Dental Care
                                 </h5>
                                 {(
@@ -220,7 +323,7 @@ export default function ServiceDetail() {
                                     <h6 className="font-semibold text-gray-700 mb-2">
                                       {cat.category}
                                     </h6>
-                                    <ol className="list-decimal list-inside ml-4 space-y-1">
+                                    <ol className="list-decimal list-inside ml-4 space-y-1 text-base leading-relaxed">
                                       {cat.items.map((step, si) => (
                                         <li key={si}>
                                           <strong>{step.title}:</strong>{" "}
@@ -232,14 +335,12 @@ export default function ServiceDetail() {
                                 ))}
                               </div>
                             )}
-
-                            {/* Aftercare and Expectations Section */}
                             {service.description.adult
                               .aftercareAndExpectations &&
                               service.description.adult.aftercareAndExpectations
                                 .length > 0 && (
                                 <div className="space-y-4 mt-8">
-                                  <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
+                                  <h4 className="text-2xl font-semibold text-blue-600">
                                     Aftercare and Expectations
                                   </h4>
                                   <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -251,14 +352,12 @@ export default function ServiceDetail() {
                                   </ul>
                                 </div>
                               )}
-                            {/* Price - Call the new helper function here */}
                             {renderPriceSection(service.description.adult)}
                           </div>
                         </div>
                       )}{" "}
                     </div>
                   )}
-                  {/* Child Section */}
                   {hasChild && (
                     <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
                       {service.description.child && (
@@ -267,14 +366,13 @@ export default function ServiceDetail() {
                             {getCategoryHeading("child")} in children
                           </h5>
                           <div className="space-y-4 text-sm">
-                            {/* causes  */}
                             {service.description.child.causes &&
                               service.description.child.causes.length > 0 && (
                                 <div>
-                                  <h6 className="font-semibold text-gray-700">
+                                  <h6 className="font-semibold text-gray-700 text-lg">
                                     Signs your child may need it{" "}
                                   </h6>
-                                  <ul className="list-disc list-inside ml-4">
+                                  <ul className="list-disc list-inside ml-4 text-base">
                                     {service.description.child.causes.map(
                                       (c, i) => (
                                         <li key={i}>{c}</li>
@@ -289,10 +387,10 @@ export default function ServiceDetail() {
                               (service.description.child.process ?? []).length >
                                 0 && (
                                 <div className="space-y-4 mt-8">
-                                  <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                  <h5 className="font-semibold text-blue-600 text-lg">
                                     Procedure at FIX Dental Care
                                   </h5>
-                                  <ol className="list-decimal list-inside ml-4 space-y-2">
+                                  <ol className="list-decimal list-inside ml-4 space-y-2 text-base leading-relaxed">
                                     {(
                                       service.description.child.process ?? []
                                     ).map((p, i) => (
@@ -301,13 +399,12 @@ export default function ServiceDetail() {
                                   </ol>
                                 </div>
                               )}
-
                             {(
                               service.description.child?.categoricalProcess ??
                               []
                             ).length > 0 && (
                               <div className="space-y-4 mt-8">
-                                <h5 className="font-semibold text-[var(--color-primary)] text-lg px-2 pt-2">
+                                <h5 className="font-semibold text-blue-600 text-lg">
                                   Procedure at FIXED Dental Care
                                 </h5>
                                 {(
@@ -321,7 +418,7 @@ export default function ServiceDetail() {
                                     <h6 className="font-semibold text-gray-700 mb-2">
                                       {cat.category}
                                     </h6>
-                                    <ol className="list-decimal list-inside ml-4 space-y-1">
+                                    <ol className="list-decimal list-inside ml-4 space-y-1 text-base leading-relaxed">
                                       {cat.items.map((step, si) => (
                                         <li key={si}>
                                           <strong>{step.title}:</strong>{" "}
@@ -333,13 +430,12 @@ export default function ServiceDetail() {
                                 ))}
                               </div>
                             )}
-                            {/* Aftercare and Expectations Section */}
                             {service.description.child
                               .aftercareAndExpectations &&
                               service.description.child.aftercareAndExpectations
                                 .length > 0 && (
                                 <div className="space-y-4 mt-8">
-                                  <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
+                                  <h4 className="text-2xl font-semibold text-blue-600">
                                     Aftercare and Expectations
                                   </h4>
                                   <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -351,7 +447,6 @@ export default function ServiceDetail() {
                                   </ul>
                                 </div>
                               )}
-                            {/* Price - Call the new helper function here */}
                             {renderPriceSection(service.description.child)}
                           </div>
                         </div>
@@ -381,22 +476,27 @@ export default function ServiceDetail() {
                 </div>
               )}
             </div>
-            {/* Additional Images */}
+            {/* Additional Images (Gallery with Modal Trigger) */}
             {(service.moreImages ?? []).length > 0 && (
               <div className="space-y-4 mt-8">
                 <h4 className="text-2xl font-semibold ">
                   More {service.title} Pictures
                 </h4>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {(service.moreImages ?? []).map((imgSrc, index) => (
-                    <img
+                    <div
                       key={index}
-                      src={imgSrc}
-                      alt={`${service.title} detail ${index + 1}`}
-                      // Updated classes for a consistent size and clear appearance
-                      className="w-full h-64 object-cover rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
-                    />
+                      className="w-full h-32 md:h-40 rounded-lg shadow-md overflow-hidden cursor-pointer
+                                 hover:scale-105 transition-transform duration-300 relative"
+                      onClick={() => openImageModal(index)} // Pass the index
+                    >
+                      <img
+                        src={imgSrc}
+                        alt={`${service.title} detail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -405,7 +505,7 @@ export default function ServiceDetail() {
             {service.aftercareAndExpectations &&
               service.aftercareAndExpectations.length > 0 && (
                 <div className="space-y-4 mt-8">
-                  <h4 className="text-2xl font-semibold text-blue-800">
+                  <h4 className="text-2xl font-semibold text-blue-600">
                     Aftercare and Expectations
                   </h4>
                   <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -418,6 +518,17 @@ export default function ServiceDetail() {
           </div>
         </motion.div>
       </div>
+
+      {/* Render the Image Modal */}
+      {isModalOpen && (
+        <ImageModal
+          imageUrl={(service.moreImages ?? [])[selectedImageIndex]}
+          onClose={closeImageModal}
+          images={service.moreImages ?? []}
+          currentImageIndex={selectedImageIndex}
+          onNavigate={handleNavigate}
+        />
+      )}
     </div>
   );
 }

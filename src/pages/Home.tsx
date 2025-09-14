@@ -2,22 +2,11 @@
 import { Link } from "react-router-dom";
 import { IoCall } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa";
-import { CiMail } from "react-icons/ci";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { MdEmail } from "react-icons/md";
 import FaqSection from "@/components/FaqSection";
-// import { CiCirclePlus } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-
-import { motion, AnimatePresence,  } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   defaultSpring,
   fadeInUp,
@@ -25,6 +14,11 @@ import {
   StatCounter,
 } from "@/lib/annimations";
 import TypewriterText from "../lib/TypewriterText";
+import { BsWhatsapp } from "react-icons/bs";
+import { testimonials, type Testimonial } from "../data/testimonials";
+import TestimonialCard from "../components/TestimonialCard";
+
+// (All your existing state and functions remain the same)
 
 export default function Home() {
   const heroSlides: {
@@ -34,10 +28,17 @@ export default function Home() {
     enterFrom: "top" | "bottom" | "left" | "right";
   }[] = [
     {
-      image: "/bg1.jpg",
+      image: "/fix2.webp",
       title: "Welcome to Fix Dental Care",
       subtitle: "Where beautiful smiles begin",
       enterFrom: "top",
+    },
+    {
+      image: "/bg1.jpg",
+      title: "The only dental care you can trust",
+      subtitle:
+        "From routine checkups to advanced treatments, we’re here for you.”Excellence in Every Checkup",
+      enterFrom: "right",
     },
     {
       image: "/slider1.png",
@@ -55,7 +56,7 @@ export default function Home() {
       image: "/bg2.jpg",
       title: "Smile comfortably in any place at any time",
       subtitle: "Advanced treatment, soothing relief",
-      enterFrom: "right",
+      enterFrom: "top",
     },
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -78,7 +79,7 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [serviceOrder]);
 
-// Reorder team members
+  // Reorder team members
   const initialTeamOrder = [0, 1, 2, 3];
   const [teamOrder, setTeamOrder] = useState(initialTeamOrder);
 
@@ -90,13 +91,15 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [teamOrder]);
 
-  
   // Image reordering for "Why Choose Us" section
   const initialImageOrder = [
-    { src: "/crownfix.jpeg", alt: "crown fix" },
-    { src: "/brace2.jpg", alt: "Braces " },
-    { src: "/brace1.jpg", alt: "Braces " },
-    { src: "/rootcanal2.jpeg", alt: "Dental Clinic 3" },
+    { src: "/crownfix.jpeg", alt: "Dental Crowns" },
+    {
+      src: "/teethwhitening.jpeg",
+      alt: "Tooh Whitening (Cosmetic Dentistry) ",
+    },
+    { src: "/implant.jpeg", alt: "Implants and Surgery " },
+    { src: "/rootcanal2.jpeg", alt: "Root Canal Treatment" },
   ];
   const [imageOrder, setImageOrder] = useState(initialImageOrder);
 
@@ -171,7 +174,9 @@ export default function Home() {
   //   setIsStatsVisible(value);
   // }
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-hidden">
+      {" "}
+      {/* Add this class to contain overflow */}
       {/* Hero Section */}
       <div className="relative w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
         <AnimatePresence>
@@ -189,7 +194,7 @@ export default function Home() {
             }}
             exit={{ opacity: 0 }}
             transition={{ duration: 4, delay: 1 }}
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat  h-full w-full"
             style={{
               backgroundImage: `url(${heroSlides[currentIndex].image})`,
               backgroundBlendMode: "multiply",
@@ -199,7 +204,6 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#2e2976]/90 to-transparent"></div>
           </motion.div>
         </AnimatePresence>
-
         {/* Text Content */}
         <div className="relative z-10 text-white px-6 md:px-12 max-w-4xl flex flex-col h-full justify-center">
           <motion.h1
@@ -216,7 +220,7 @@ export default function Home() {
             }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, delay: 1.3 }}
-            className="text-4xl text-white sm:text-5xl md:text-6xl font-extrabold font-serif leading-tight mb-4"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold font-serif leading-tight mb-4 text-white"
           >
             {heroSlides[currentIndex].title}
           </motion.h1>
@@ -227,7 +231,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, delay: 1.6 }}
-            className="text-lg/7 font-semibold tracking-wide text-black font-serif md:text-xl mb-6"
+            className="text-gray-300 md:text-xl mb-6 font-semibold text-gray-200"
           >
             {heroSlides[currentIndex].subtitle}
           </motion.p>
@@ -240,42 +244,76 @@ export default function Home() {
             whileTap={{ scale: 0.8, rotate: -10 }}
           ></motion.div>
           <Button
-            className=" hover:bg-[var(--color-primary)] text-[var(--color-primary-foreground)]
-             px-6 py-3 rounded-lg shadow-md transition duration-300 ease-in-out   font-bold  rounded-lg
-             shadow-xl transition duration-300 ease-in-out text-lg w-fit"
+            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary)] text-white
+      px-6 py-3 rounded-lg shadow-xl transition duration-300 ease-in-out font-bold text-lg w-fit"
           >
-            <Link to="/appointment" className=" text-white ">
+            <Link to="/appointment" className="text-white">
               Book Appointment
             </Link>
           </Button>
         </div>
       </div>
-
-      <div className=" bg-[var(--color-primary)] text-[var(--color-primary-foreground)]  py-16">
+      <div className="bg-[var(--color-primary)] text-[var(--color-primary-foreground)] py-16">
         <div className="container mx-auto px-6 md:px-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {/* Section 1 */}
-            <div className="flex items-center gap-2">
-              <IoCall className="text-xl" />
-              <span>Need a dental service</span>
-            </div>
-
-            {/* Section 2 */}
-            <div className="flex items-center gap-2 border-l border-white pl-4">
-              <FaRegClock className="text-xl" />
-              <span>Opening Hours</span>
-            </div>
-
-            {/* Section 3 */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-l border-white pl-4">
-              <CiMail className="text-xl" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {/* Section 1 - Call Us */}
+            <div className="flex sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
+              <IoCall className="text-4xl text-white" />
               <div>
-                <h4 className="text-2xl font-bold text-white">Email us</h4>
-                <span className="text-lg">fixdentalcare@gmail.com</span>
+                <h4 className="text-xl font-semibold text-black font-serif">
+                  Call Us
+                </h4>
+                <p className="text-lg leading-snug text-gray-200 font-mono font-semibold pt-2">
+                  0700298499 | 0782569390{" "}
+                  <span className="mt-2">0772359837 | 0764043489</span>
+                </p>
               </div>
             </div>
 
-            {/* Add more sections here if needed */}
+            {/* Section 2 - Opening Hours */}
+            <div className="flex  sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
+              <FaRegClock className="text-2xl text-white" />
+              <div>
+                <h4 className="text-xl font-semibold text-black font-serif">
+                  Opening Hours
+                </h4>
+                <p className="text-lg leading-snug text-gray-200 font-mono font-semibold pt-2">
+                  Mon - Sat: 8:00 AM - 10:00 PM <br />
+                  Sun: 9:00 AM - 7:00 PM
+                </p>
+              </div>
+            </div>
+
+            {/* Section 3 - WhatsApp / Text Us */}
+            <div className="flex sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
+              <BsWhatsapp className="text-xl md:text-2xl text-white" />
+              <div>
+                <h4 className="text-xl font-semibold text-black font-serif">
+                  WhatsApp
+                </h4>
+                <p className="text-lg leading-snug text-gray-200 font-mono font-semibold pt-2 ">
+                  0700298499
+                </p>
+              </div>
+            </div>
+
+            {/* Section 4 - Email */}
+            <div className="flex sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
+              <MdEmail className="text-xl md:text-2xl lg:text-3xl text-white font-bold" />
+              <div>
+                <h4 className="text-xl font-semibold text-black font-serif">
+                  Send a Message
+                </h4>
+                <p className=" ">
+                  <a
+                    href="mailto:fixdentalc@gmail.com"
+                    className="text-xl leading-snug text-gray-200 font-serif  pt-2"
+                  >
+                    fixdentalc@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -283,7 +321,7 @@ export default function Home() {
       <motion.div
         {...fadeInUp}
         layout
-        className="bg-blue-50 py-16 px-6 md:px-20"
+        className="bg-blue-50 py-16 md:py-24 px-6 md:px-20"
       >
         {" "}
         {/* Apply fadeInUp directly */}
@@ -293,18 +331,18 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4">
               {/* Top image scrolls down */}
               <motion.img
-                src="/bg1.jpg"
-                alt="Dentist treating patient"
-                className="rounded-2xl shadow-md w-full object-cover h-[300px]"
+                src="/smile.jpeg"
+                alt="smilling person"
+                className="rounded-2xl shadow-md w-full object-cover aspect-square scale-x-[-1]"
                 initial={{ y: -100, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
               />
               {/* Bottom image scrolls up */}
               <motion.img
-                src="/bg2.jpg"
+                src="/familysmile.jpeg"
                 alt="Happy patient with dentist"
-                className="rounded-2xl shadow-md w-full object-cover h-[300px] mt-[3em]"
+                className="rounded-2xl shadow-md w-full object-cover aspect-square  md:mt-[3em] "
                 initial={{ y: 100, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -317,22 +355,22 @@ export default function Home() {
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <p className="text-blue-600 font-medium mb-2">About Us</p>
-              <h2 className="text-4xl font-bold mb-4 text-gray-800 leading-snug ">
-                Professionals and Personalized Dental Excellence
+              <h2 className="text-2xl md:text-3xl lg:text-4xl mb-2">
+                About Us
               </h2>
+              <h3 className="text-2xl font-bold mb-4 text-gray-800 leading-snug ">
+                Professionals and Personalized Dental Excellence
+              </h3>
               <p className="text-gray-600 mb-6">
                 We offer high-quality dental care tailored for the whole family.
                 From routine checkups to advanced treatments, our compassionate
                 team ensures your smile stays healthy and confident.
               </p>
-              <Button>
-                <Link
-                  to="/about"
-                  className="inline-block text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
-                >
-                  Learn More
-                </Link>
+              <Button
+                asChild
+                className="hover:bg-[var(--color-primary)]  text-white px-8 py-3 rounded-full shadow-lg transition-transform duration-300 hover:scale-105"
+              >
+                <Link to="/about-us">Learn More</Link>
               </Button>
             </motion.div>
           </div>
@@ -360,7 +398,6 @@ export default function Home() {
           );
         })}
       </motion.div>
-
       {/* Full-Width Rectangle Section (Statistics) */}
       <motion.div
         {...fadeInUp}
@@ -372,7 +409,7 @@ export default function Home() {
             {/* Statistic Card 1 */}
             <div className="bg-white text-blue-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
               <h2 className="text-4xl font-bold mb-2">
-                <StatCounter end={10000} duration={3} start={isStatsVisible} />+
+                <StatCounter end={1000} duration={3} start={isStatsVisible} />+
               </h2>
               <p className="text-lg">Happy Patients</p>
             </div>
@@ -380,7 +417,7 @@ export default function Home() {
             {/* Statistic Card 2 */}
             <div className="bg-white text-blue-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
               <h2 className="text-4xl font-bold mb-2">
-                <StatCounter end={2500} duration={3} start={isStatsVisible} />+
+                <StatCounter end={250} duration={3} start={isStatsVisible} />+
               </h2>
               <p className="text-lg">Teeth Whitened</p>
             </div>
@@ -396,7 +433,7 @@ export default function Home() {
             {/* Statistic Card 4 */}
             <div className="bg-white text-blue-800 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
               <h2 className="text-4xl font-bold mb-2">
-                <StatCounter end={15} duration={3} start={isStatsVisible} />+
+                <StatCounter end={10} duration={3} start={isStatsVisible} />+
               </h2>
               <p className="text-lg">Years of Experience</p>
             </div>
@@ -411,18 +448,18 @@ export default function Home() {
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 px-4 items-center">
             {/* Text */}
             <div>
-              <h2 className=" uppercase mb-2">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl mb-2">
                 <TypewriterText text="Why Choose Fix Dental Care" />
               </h2>
               <div className="px-4">
-                <p className="text-gray-600 text-normal mb-4">
+                <p className="sm:text-[15px]  text-gray-600  mb-4">
                   At Fix Dental Care, we prioritize your comfort and health. Our
                   experienced team provides personalized care using the latest
                   technology to ensure you receive the best treatment possible.
                 </p>
-                <h4 className="text-2xl font-semibold mb-4">
+                <h3 className="text-xl md:text-3xl lg:text-4xl mb-2">
                   Exceptional Service With a <br /> Personal Touch
-                </h4>
+                </h3>
                 <p className="text-gray-700 text-normal mb-4">
                   Choosing the right dental provider matters. We combine expert
                   care, advanced technology, and a warm atmosphere to ensure
@@ -436,7 +473,7 @@ export default function Home() {
                   <h5 className="font-semibold text-gray-800">
                     Experienced Dental Service
                   </h5>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-normal">
                     Skilled care backed by years of trusted dental experience.
                   </p>
                 </div>
@@ -444,7 +481,7 @@ export default function Home() {
                   <h5 className="font-semibold text-gray-800">
                     Advanced Technology
                   </h5>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-normal">
                     Modern tools ensure accurate and efficient treatments.
                   </p>
                 </div>
@@ -452,7 +489,7 @@ export default function Home() {
                   <h5 className="font-semibold text-gray-800">
                     Personalized Treatment
                   </h5>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-normal">
                     Custom care plans made to fit your smile and lifestyle.
                   </p>
                 </div>
@@ -460,7 +497,7 @@ export default function Home() {
                   <h5 className="font-semibold text-gray-800">
                     Family-Friendly
                   </h5>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-normal">
                     Welcoming space for kids, teens, adults, and seniors.
                   </p>
                 </div>
@@ -470,38 +507,58 @@ export default function Home() {
             {/* Images with reorder animation */}
             <motion.div layout className="grid grid-cols-2 gap-4">
               {imageOrder.map((image, index) => (
-                <motion.img
-                  key={image.src + index} // Use a unique key for each image
+                <motion.div
+                  key={image.src + index}
                   layout
                   transition={defaultSpring}
-                  src={image.src}
-                  alt={image.alt}
-                  className={`w-full h-48 object-cover rounded-lg shadow-md ${
-                    index === 2 ? "row-span-2" : "" // Maintain layout for the tall image
+                  className={`flex flex-col items-center ${
+                    index === 2 ? "md:row-span-2" : ""
                   }`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                />
+                >
+                  <motion.img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-48 object-cover aspect-square rounded-lg shadow-md"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  />
+                  <motion.span
+                    className="mt-2 text-center font-medium sm:text-left"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {image.alt}
+                  </motion.span>
+                </motion.div>
               ))}
+
+              {/* Button inside the grid, spanning both columns */}
+              <div className="col-span-2 flex justify-center mt-4">
+                <Button>
+                  <Link to="/services" className="text-white">
+                    View All Services
+                  </Link>
+                </Button>
+              </div>
             </motion.div>
           </div>
         </div>
       </motion.div>
-
       {/* Team Section */}
       <motion.div {...fadeInUp}>
         {" "}
         {/* Apply fadeInUp to this section */}
         <div className="bg-blue-100 py-12">
           <div className="max-w-7xl mx-auto text-center px-4 mb-8">
-            <h3 className="text-2xl font-semibold">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl mb-2 font-semibold">
               <TypewriterText text=" Meet Our Dental Team" />
             </h3>
             <p className="text-gray-600 text-lg font-bold">
               <TypewriterText text=" Committed to Your Smile" />
             </p>
-            <p className="text-gray-700 text-lg mt-2">
+            <p className="text-gray-700 text-lg md:text-xl mt-2">
               Our experienced dental team is here to make every visit positive
               and personalized. <br /> With gentle hands and caring hearts,{" "}
               <br /> we create a welcoming environment for all.
@@ -525,8 +582,9 @@ export default function Home() {
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="w-100 h-90 object-cover rounded-full mb-4"
+                      className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain object-center rounded-full mb-4"
                     />
+
                     <div className="text-lg font-semibold">{member.name}</div>
                     <div className="italic text-gray-700 font-semibold">
                       {member.title}
@@ -540,77 +598,39 @@ export default function Home() {
       </motion.div>
       {/* Testimonials */}
       <motion.div {...fadeInUp}>
-        {" "}
-        {/* Apply fadeInUp to this section */}
-        <div className=" bg-blue-50 py-16 px-6 md:px-20">
-          <div className="text-center px-4 mb-8 max-2-7xl mx-auto">
-            <h2 className=" text-2xl font-semibold  mb-2 ">Testimonials</h2>
-            <h5 className="text-blue-600 text-lg">
-              <TypewriterText text="What Our Patients Say" />
-            </h5>
-            <p className="text-gray-700 text-normal mt-2">
+        <div className="bg-blue-50 py-16 px-6 md:px-20">
+          {/* Header Section */}
+          <div className="text-center px-4 mb-8 max-w-4xl mx-auto sm:text-left">
+            <h2 className="text-4xl font-bold text-gray-800 mb-2">
+              What our happy clients are saying
+            </h2>
+            <p className="text-gray-700 text-xl mt-4">
               Join thousands of happy patients who trust us for gentle, expert
-              care and beautiful smiles. <br /> Your perfect dental experience
-              starts here!
+              care and beautiful smiles. Your perfect dental experience starts
+              here!
             </p>
           </div>
 
-          <div className="services">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {/* These Card components seem to be placeholders. You'll likely want to dynamically render actual testimonials here. */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Card Title</CardTitle>
-                  <CardDescription>Card Description</CardDescription>
-                  <CardAction>Card Action</CardAction>
-                </CardHeader>
-                <CardContent>
-                  <p>Card Content</p>
-                </CardContent>
-                <CardFooter>
-                  <p>Card Footer</p>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Card Title</CardTitle>
-                  <CardDescription>Card Description</CardDescription>
-                  <CardAction>Card Action</CardAction>
-                </CardHeader>
-                <CardContent>
-                  <p>Card Content</p>
-                </CardContent>
-                <CardFooter>
-                  <p>Card Footer</p>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Card Title</CardTitle>
-                  <CardDescription>Card Description</CardDescription>
-                  <CardAction>Card Action</CardAction>
-                </CardHeader>
-                <CardContent>
-                  <p>Card Content</p>
-                </CardContent>
-                <CardFooter>
-                  <p>Card Footer</p>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Card Title</CardTitle>
-                  <CardDescription>Card Description</CardDescription>
-                  <CardAction>Card Action</CardAction>
-                </CardHeader>
-                <CardContent>
-                  <p>Card Content</p>
-                </CardContent>
-                <CardFooter>
-                  <p>Card Footer</p>
-                </CardFooter>
-              </Card>
+          {/* Testimonials Grid */}
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* You should map over your testimonial data here, showing a limited number of cards */}
+              {testimonials.slice(0, 3).map((testimonial: Testimonial) => (
+                <TestimonialCard
+                  key={testimonial.id}
+                  testimonial={testimonial}
+                />
+              ))}
             </div>
+          </div>
+
+          {/* "View All" Button */}
+          <div className="flex justify-end max-w-7xl mx-auto mt-8 px-4">
+            <Button className="hover:bg-blue-900 text-white font-semibold py-2 px-4 rounded-full shadow-lg transition-colors duration-200">
+              <Link to="/testimonials" className="text-white">
+                Read All Testimonials
+              </Link>
+            </Button>
           </div>
         </div>
       </motion.div>
@@ -640,4 +660,3 @@ export default function Home() {
     </div>
   );
 }
-
