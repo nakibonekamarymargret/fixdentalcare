@@ -13,10 +13,12 @@ import Testimonials from "./pages/Testimonials";
 import Gallery from "./pages/Gallery";
 import ScrollToTop from "./components/ScrollToTop";
 
+
 const App = () => { 
   return (
     <Router>
       <ScrollToTop />
+    
       <Navbar />
 
       <Routes>

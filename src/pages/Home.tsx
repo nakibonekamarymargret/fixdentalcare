@@ -1,8 +1,4 @@
-// Home.tsx
 import { Link } from "react-router-dom";
-import { IoCall } from "react-icons/io5";
-import { FaRegClock } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import FaqSection from "@/components/FaqSection";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -14,49 +10,52 @@ import {
   StatCounter,
 } from "@/lib/annimations";
 import TypewriterText from "../lib/TypewriterText";
-import { BsWhatsapp } from "react-icons/bs";
 import { testimonials, type Testimonial } from "../data/testimonials";
 import TestimonialCard from "../components/TestimonialCard";
-
-// (All your existing state and functions remain the same)
+import ContactGrid from "../components/layout/ContactGrid";
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is Tailwind's 'md' breakpoint
+    };
+    handleResize(); // Set initial state
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const heroSlides: {
     image: string;
     title: string;
     subtitle: string;
-    enterFrom: "top" | "bottom" | "left" | "right";
   }[] = [
     {
       image: "/fix2.webp",
       title: "Welcome to Fix Dental Care",
       subtitle: "Where beautiful smiles begin",
-      enterFrom: "top",
     },
     {
       image: "/bg1.jpg",
       title: "The only dental care you can trust",
       subtitle:
         "From routine checkups to advanced treatments, we’re here for you.”Excellence in Every Checkup",
-      enterFrom: "right",
     },
     {
       image: "/slider1.png",
       title: "Crystal teeth, Confident Smile",
       subtitle: "Breathe easy, smile freely",
-      enterFrom: "bottom",
     },
     {
       image: "/rootcanal.jpeg",
       title: "Say Goodbye to Infections",
       subtitle: "Gentle, expert care for a healthy mouth",
-      enterFrom: "left",
     },
     {
       image: "/bg2.jpg",
       title: "Smile comfortably in any place at any time",
       subtitle: "Advanced treatment, soothing relief",
-      enterFrom: "top",
     },
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -64,10 +63,10 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroSlides.length);
-    }, 6000); // every 6 seconds
+    }, 6000);
     return () => clearInterval(interval);
   }, [heroSlides.length]);
-  // Transition on services ie reordering transition
+
   const initialServiceOrder = [0, 1, 2, 3];
   const [serviceOrder, setServiceOrder] = useState(initialServiceOrder);
 
@@ -75,11 +74,10 @@ export default function Home() {
     const timeout = setTimeout(
       () => setServiceOrder(shuffleArray([...serviceOrder])),
       4000
-    ); // every 4s
+    );
     return () => clearTimeout(timeout);
   }, [serviceOrder]);
 
-  // Reorder team members
   const initialTeamOrder = [0, 1, 2, 3];
   const [teamOrder, setTeamOrder] = useState(initialTeamOrder);
 
@@ -87,11 +85,10 @@ export default function Home() {
     const timeout = setTimeout(
       () => setTeamOrder(shuffleArray([...teamOrder])),
       4000
-    ); // every 4s
+    );
     return () => clearTimeout(timeout);
   }, [teamOrder]);
 
-  // Image reordering for "Why Choose Us" section
   const initialImageOrder = [
     { src: "/crownfix.jpeg", alt: "Dental Crowns" },
     {
@@ -107,7 +104,7 @@ export default function Home() {
     const timeout = setTimeout(
       () => setImageOrder(shuffleArray([...imageOrder])),
       3000
-    ); // every 3 seconds for image reorder
+    );
     return () => clearTimeout(timeout);
   }, [imageOrder]);
 
@@ -170,57 +167,50 @@ export default function Home() {
   ];
   const [isStatsVisible, setIsStatsVisible] = useState(false);
 
-  // function setIsStatsVisible(value: boolean) {
-  //   setIsStatsVisible(value);
-  // }
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden overflow-y-hidden ">
       {" "}
-      {/* Add this class to contain overflow */}
       {/* Hero Section */}
       <div className="relative w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
         <AnimatePresence>
           <motion.div
             key={heroSlides[currentIndex].image}
-            initial={{
-              ...getDirectionVariant(heroSlides[currentIndex].enterFrom)
-                .initial,
-            }}
+            initial={
+              isMobile
+                ? { opacity: 0, y: 20 }
+                : getDirectionVariant("right").initial
+            }
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            animate={{
-              ...getDirectionVariant(heroSlides[currentIndex].enterFrom)
-                .animate,
-            }}
+            animate={
+              isMobile
+                ? { opacity: 1, y: 0 }
+                : getDirectionVariant("right").animate
+            }
             exit={{ opacity: 0 }}
-            transition={{ duration: 4, delay: 1 }}
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat  h-full w-full"
+            // Change the transition here
+            transition={{ duration: 1.5, delay: 0.5 }} // A shorter duration is much smoother
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat h-full w-full"
             style={{
               backgroundImage: `url(${heroSlides[currentIndex].image})`,
               backgroundBlendMode: "multiply",
               backgroundColor: "rgba(0, 0, 0, 0.4)",
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#2e2976]/90 to-transparent"></div>
+            {/* <div className="absolute inset-0 bg-gradient-to-r from-[#f0f0f0]/90  to-transparent "></div> */}
+            <div className="absolute inset-0 z-10 bg-radial-[at_center] from-black/80 to-transparent"></div>
+            {/* <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#2e2976]/90 to-transparent"></div> */}
           </motion.div>
         </AnimatePresence>
         {/* Text Content */}
         <div className="relative z-10 text-white px-6 md:px-12 max-w-4xl flex flex-col h-full justify-center">
           <motion.h1
             key={heroSlides[currentIndex].title}
-            initial={{
-              ...getDirectionVariant(heroSlides[currentIndex].enterFrom)
-                .initial,
-              opacity: 0,
-            }}
-            animate={{
-              ...getDirectionVariant(heroSlides[currentIndex].enterFrom)
-                .animate,
-              opacity: 1,
-            }}
+            initial={{ opacity: 0 }} // Start completely transparent
+            animate={{ opacity: 1 }} // Fade to fully visible
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, delay: 1.3 }}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold font-serif leading-tight mb-4 text-white"
+            transition={{ duration: 1.5, delay: 0.5 }} // Keep a smooth, short duration
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold   leading-tight mb-4 text-white"
           >
             {heroSlides[currentIndex].title}
           </motion.h1>
@@ -231,7 +221,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, delay: 1.6 }}
-            className="text-gray-300 md:text-xl mb-6 font-semibold text-gray-200"
+            className="text-gray-900 md:text-xl mb-6 font-semibold text-white"
           >
             {heroSlides[currentIndex].subtitle}
           </motion.p>
@@ -253,69 +243,8 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <div className="bg-[var(--color-primary)] text-[var(--color-primary-foreground)] py-16">
-        <div className="container mx-auto px-6 md:px-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {/* Section 1 - Call Us */}
-            <div className="flex sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
-              <IoCall className="text-4xl text-white" />
-              <div>
-                <h4 className="text-xl font-semibold text-black font-serif">
-                  Call Us
-                </h4>
-                <p className="text-lg leading-snug text-gray-200 font-mono font-semibold pt-2">
-                  0700298499 | 0782569390{" "}
-                  <span className="mt-2">0772359837 | 0764043489</span>
-                </p>
-              </div>
-            </div>
-
-            {/* Section 2 - Opening Hours */}
-            <div className="flex  sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
-              <FaRegClock className="text-2xl text-white" />
-              <div>
-                <h4 className="text-xl font-semibold text-black font-serif">
-                  Opening Hours
-                </h4>
-                <p className="text-lg leading-snug text-gray-200 font-mono font-semibold pt-2">
-                  Mon - Sat: 8:00 AM - 10:00 PM <br />
-                  Sun: 9:00 AM - 7:00 PM
-                </p>
-              </div>
-            </div>
-
-            {/* Section 3 - WhatsApp / Text Us */}
-            <div className="flex sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
-              <BsWhatsapp className="text-xl md:text-2xl text-white" />
-              <div>
-                <h4 className="text-xl font-semibold text-black font-serif">
-                  WhatsApp
-                </h4>
-                <p className="text-lg leading-snug text-gray-200 font-mono font-semibold pt-2 ">
-                  0700298499
-                </p>
-              </div>
-            </div>
-
-            {/* Section 4 - Email */}
-            <div className="flex sm:items-left gap-3 border-t sm:border-t-0 sm:border-l border-white pt-4 sm:pt-0 sm:pl-6">
-              <MdEmail className="text-xl md:text-2xl lg:text-3xl text-white font-bold" />
-              <div>
-                <h4 className="text-xl font-semibold text-black font-serif">
-                  Send a Message
-                </h4>
-                <p className=" ">
-                  <a
-                    href="mailto:fixdentalc@gmail.com"
-                    className="text-xl leading-snug text-gray-200 font-serif  pt-2"
-                  >
-                    fixdentalc@gmail.com
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="w-full relative -mt-16 sm:-mt-24 lg:-mt-32 z-20">
+        <ContactGrid />
       </div>
       {/* About Us Section */}
       <motion.div
@@ -340,7 +269,7 @@ export default function Home() {
               />
               {/* Bottom image scrolls up */}
               <motion.img
-                src="/familysmile.jpeg"
+                src="/teethcleaning2.jpeg"
                 alt="Happy patient with dentist"
                 className="rounded-2xl shadow-md w-full object-cover aspect-square  md:mt-[3em] "
                 initial={{ y: 100, opacity: 0 }}

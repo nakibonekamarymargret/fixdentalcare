@@ -48,7 +48,7 @@ const Gallery = () => {
     <div className="bg-gray-50 text-gray-900 min-h-screen font-sans">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-blue-800 mb-4">
+          <h1 className="text-4xl sm:text-5xl font-extrabold t mb-4">
             Our Gallery
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">

@@ -91,8 +91,7 @@ export function StatCounter({
     if (!start) return;
     const controls = animate(count, end, { duration });
     return () => controls.stop();
-  }, [end, duration, start]); // Now respects `start`
-
+  }, [count, end, duration, start]);
   return <motion.span style={text}>{rounded}</motion.span>;
 }
 
@@ -207,3 +206,4 @@ const paths = [
 ];
 
 const colors = ["#ff4081", "#2196f3"];
+ 

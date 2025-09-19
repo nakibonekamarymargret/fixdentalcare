@@ -1,14 +1,84 @@
-import { IoTimeOutline } from "react-icons/io5";
-import { IoMdCall } from "react-icons/io";
 import { CiMail } from "react-icons/ci";
-import { IoLocationSharp } from "react-icons/io5";
 import { Button } from "../components/ui/button";
 import { BsWhatsapp } from "react-icons/bs";
+import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { IoLocationSharp, IoTimeOutline } from "react-icons/io5";
+import { IoMdCall } from "react-icons/io";
 
 const Contact = () => {
- 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { name, email, message } = formData;
+    if (!name || !email || !message) {
+      toast.error("Please fill in Name, Email, and Message.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "b9530659-9dda-4e42-aaea-6d270a973319", // your Web3Forms key
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success("Message sent successfully!");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        toast.error("Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full min-h-screen bg-white">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       {/* Hero Section */}
       <div className="bg-blue-50 py-10">
         <div className="max-w-7xl mx-auto px-4 text-center">
@@ -42,12 +112,11 @@ const Contact = () => {
           </h3>
           <p className="text-gray-700 text-lg mb-6">
             Whether you have a question, suggestion, or just want to say hello,
-            please fill out the form and we'll respond as soon as possible.
+            please fill out the form and we'll get back to you soon.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* We're Open */}
             <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
-              <div className="bg-blue-600 p-3 rounded-full text-white">
+              <div className="bg-[var(--color-primary)] p-3 rounded-full text-white">
                 <IoTimeOutline className="text-2xl" />
               </div>
               <div>
@@ -61,9 +130,8 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Clinic Location */}
             <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
-              <div className="bg-blue-600 p-3 rounded-full text-white">
+              <div className="bg-[var(--color-primary)] p-3 rounded-full text-white">
                 <IoLocationSharp className="text-2xl" />
               </div>
               <div>
@@ -77,9 +145,8 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Call Us */}
             <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
-              <div className="bg-blue-600 p-3 rounded-full text-white">
+              <div className="bg-[var(--color-primary)] p-3 rounded-full text-white">
                 <IoMdCall className="text-2xl" />
               </div>
               <div>
@@ -90,9 +157,8 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Text Us on WhatsApp */}
             <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
-              <div className="bg-blue-600 p-3 rounded-full text-white">
+              <div className="bg-[var(--color-primary)] p-3 rounded-full text-white">
                 <BsWhatsapp className="text-2xl" />
               </div>
               <div>
@@ -103,21 +169,13 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Send a Message (Email) */}
             <div className="flex items-start gap-4 p-4 rounded-lg bg-gray-50">
-              <div className="bg-blue-600 p-3 rounded-full text-white">
+              <div className="bg-[var(--color-primary)] p-3 rounded-full text-white">
                 <CiMail className="text-2xl" />
               </div>
               <div>
-                <h4 className="font-semibold text-lg text-gray-800">
-                  Send a Message
-                </h4>
-                <a
-                  href="mailto:fixdentalc@gmail.com"
-                  className="text-sm text-gray-600 hover:text-blue-600 underline"
-                >
-                  fixdentalc@gmail.com
-                </a>
+                <h4 className="font-semibold text-lg text-gray-800">Email</h4>
+                <p className="text-sm text-gray-600">fixdentalc@gmail.com</p>
               </div>
             </div>
           </div>
@@ -128,7 +186,7 @@ const Contact = () => {
           <h4 className="text-xl font-semibold mb-6 text-gray-800">
             Send a Message
           </h4>
-          <form >
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -139,11 +197,15 @@ const Contact = () => {
               <input
                 type="text"
                 id="name"
-                name="user_name" // Use name attribute for EmailJS
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 placeholder="Your Name"
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               />
             </div>
+
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -154,11 +216,15 @@ const Contact = () => {
               <input
                 type="email"
                 id="email"
-                name="user_email" // Use name attribute for EmailJS
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Your Email"
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               />
             </div>
+
             <div className="mb-4">
               <label
                 htmlFor="phone"
@@ -169,11 +235,14 @@ const Contact = () => {
               <input
                 type="tel"
                 id="phone"
-                name="user_phone" // Use name attribute for EmailJS
-                placeholder="Your Phone Number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Your Phone Number (Optional)"
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+
             <div className="mb-4">
               <label
                 htmlFor="message"
@@ -184,21 +253,24 @@ const Contact = () => {
               <textarea
                 id="message"
                 name="message"
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Your Message"
                 className="w-full p-3 border border-gray-300 rounded h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
               ></textarea>
             </div>
+
             <Button
               type="submit"
               className="w-full py-3 rounded transition duration-300"
+              disabled={isSubmitting}
             >
-              Send Message
+              {isSubmitting ? "Sending..." : "Send Message"}
             </Button>
           </form>
         </div>
       </div>
-
-      {/* Render the modal */}
     </div>
   );
 };

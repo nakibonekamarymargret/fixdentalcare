@@ -1,9 +1,11 @@
+// ... (imports remain the same)
 import { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { User, CheckCircle, ClipboardList, Calendar } from "lucide-react";
 import DateTimeSelection from "../components/layout/Calendar";
 import BasicDetailsForm from "../components/appointments/ AppointmentForm";
 import ServiceSelection from "../components/appointments/ServiceSelection";
+import { Button } from "../components/ui/button";
 
 // Type Definitions (same as before)
 type PriceOption = {
@@ -11,14 +13,12 @@ type PriceOption = {
   ageGroup: string;
   price: string;
 };
-
 type Service = {
   id: string;
   name: string;
   category: string;
   priceOptions: PriceOption[];
 };
-
 type FormData = {
   firstName: string;
   lastName: string;
@@ -48,12 +48,10 @@ const AppointmentSummary = ({
         day: "numeric",
       })
     : "N/A";
-
   const customerName = `${formData.firstName} ${formData.lastName}`.trim();
   const serviceDisplayName = selectedService
     ? `${selectedService.name} (${selectedPriceOption?.ageGroup || "N/A"})`
     : "N/A";
-
   return (
     <div className="p-6 bg-white rounded-xl shadow-md">
       <h2 className="text-2xl font-semibold mb-6 text-center">
@@ -106,10 +104,10 @@ const Appointment = () => {
     phone: "",
     note: "",
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [, setErrors] = useState({});
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
   useEffect(() => {
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -142,7 +140,8 @@ const Appointment = () => {
     setErrors({});
     setCurrentStep(0);
     setIsSuccess(false);
-    window.scrollTo(0, 0); // Add scroll to top on form reset
+    setCompletedSteps([]);
+    window.scrollTo(0, 0);
   };
 
   const handleServiceSelect = (
@@ -175,9 +174,7 @@ const Appointment = () => {
       alert("Please fill in all required personal details.");
       return;
     }
-
     setIsSubmitting(true);
-
     const clientTemplateParams = {
       client_name: `${formData.firstName} ${formData.lastName}`,
       client_email: formData.email,
@@ -193,7 +190,6 @@ const Appointment = () => {
       note: formData.note,
       service_price: selectedPriceOption.price,
     };
-
     // Parameters for the clinic's notification email
     const clinicTemplateParams = {
       client_name: `${formData.firstName} ${formData.lastName}`,
@@ -208,7 +204,6 @@ const Appointment = () => {
       client_email: formData.email,
       note: formData.note,
     };
-
     try {
       // Send confirmation email to the client (existing logic)
       await emailjs.send(
@@ -216,14 +211,12 @@ const Appointment = () => {
         import.meta.env.VITE_EMAILJS_CLIENT_TEMPLATE_ID, // Client's NEW template ID
         clientTemplateParams
       );
-
       // Send a separate notification email to the clinic
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_CLINIC_TEMPLATE_ID,
         clinicTemplateParams
       );
-
       setIsSuccess(true);
       window.scrollTo(0, 0); // Add scroll to top after successful submission
     } catch (error) {
@@ -235,14 +228,20 @@ const Appointment = () => {
   };
 
   const handleNext = () => {
-    if (currentStep === 0 && (!selectedService || !selectedPriceOption)) {
-      alert("Please select a service and a price option.");
-      return;
-    }
-    if (currentStep === 1 && (!selectedDate || !selectedTime)) {
-      alert("Please select a date and time.");
-      return;
-    }
+    // if (currentStep === 0) {
+    //   if (!selectedService || !selectedPriceOption) {
+    //     alert("Please select a service before proceeding.");
+    //     return;
+    //   }
+    // }
+
+    // if (currentStep === 1) {
+    //   if (!selectedDate || !selectedTime) {
+    //     alert("Please select a date and time before proceeding.");
+    //     return;
+    //   }
+    // }
+
     if (currentStep === 2) {
       const { firstName, lastName, email, phone } = formData;
       if (!firstName || !lastName || !email || !phone) {
@@ -250,18 +249,20 @@ const Appointment = () => {
         return;
       }
     }
+
+    setCompletedSteps((prev) => [...prev, currentStep]);
     setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-    window.scrollTo(0, 0); // Add scroll to top on next step
+    window.scrollTo(0, 0);
   };
 
   const handleGoBack = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
-    window.scrollTo(0, 0); // Add scroll to top on go back
+    window.scrollTo(0, 0);
   };
 
   const handleStepClick = (index: number) => {
     setCurrentStep(index);
-    window.scrollTo(0, 0); // Add scroll to top on direct step click
+    window.scrollTo(0, 0);
   };
 
   const renderStepContent = () => {
@@ -274,12 +275,12 @@ const Appointment = () => {
             Your appointment has been booked. A confirmation email was sent to{" "}
             <strong>{formData.email}</strong>.
           </p>
-          <button
+          <Button
             onClick={resetForm}
             className="px-6 py-3 bg-sky-600 text-white rounded-full font-semibold hover:bg-sky-700 transition"
           >
             Book Another
-          </button>
+          </Button>
         </div>
       );
     }
@@ -290,7 +291,7 @@ const Appointment = () => {
             onSelectService={handleServiceSelect}
             selectedService={selectedService}
             selectedPriceOptionId={selectedPriceOption?.id || null}
-            onAdvanceStep={handleNext} // Use the modified handleNext function
+            onAdvanceStep={handleNext}
           />
         );
       case 1:
@@ -302,7 +303,7 @@ const Appointment = () => {
             }}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
-            onAdvanceStep={handleNext} // Use the modified handleNext function
+            onAdvanceStep={handleNext}
           />
         );
       case 2:
@@ -324,11 +325,12 @@ const Appointment = () => {
     }
   };
 
+  // This is the main return statement for the Appointment component
   return (
-    <div className="bg-gray-100 min-h-screen font-sans">
+    <div className="bg-gray-100 min-h-screen font-sans overflow-x-hidden">
       <div className="bg-sky-50 py-10 rounded-b-lg shadow-md">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-2">
             Book Appointment
           </h1>
           <p className="text-gray-600 mb-4">
@@ -352,7 +354,8 @@ const Appointment = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-1">
+          {/* Vertical Navigation (Desktop) */}
+          <div className="hidden lg:block lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <ul className="space-y-4">
                 {steps.map((step, index) => (
@@ -366,9 +369,13 @@ const Appointment = () => {
                       }
                       ${index < currentStep ? "bg-sky-100 text-sky-800" : ""}
                     `}
-                    onClick={() => handleStepClick(index)} // Use the new handler
+                    onClick={() => handleStepClick(index)}
                   >
-                    <step.icon size={20} className="mr-3" />
+                    {completedSteps.includes(index) ? (
+                      <CheckCircle size={20} className="mr-3 text-green-500" />
+                    ) : (
+                      <step.icon size={20} className="mr-3" />
+                    )}
                     <span className="font-medium">{step.name}</span>
                   </li>
                 ))}
@@ -376,13 +383,48 @@ const Appointment = () => {
             </div>
           </div>
           <div className="lg:col-span-2">
+            {/* Horizontal Progress Bar (Mobile) */}
+            <div className="lg:hidden w-full overflow-hidden mb-8">
+              <div className="flex justify-between items-center text-center">
+                {steps.map((step, index) => (
+                  <div
+                    key={step.name}
+                    className={`flex-1 flex flex-col items-center cursor-pointer transition-all duration-300
+                                ${index <= currentStep ? "text-sky-700" : "text-gray-400"}
+                              `}
+                    onClick={() => handleStepClick(index)}
+                  >
+                    <div
+                      className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-colors duration-300
+                                  ${
+                                    index === currentStep
+                                      ? "bg-sky-700 text-white border-sky-700 shadow-md"
+                                      : "bg-white border-gray-300"
+                                  }
+                                  ${index < currentStep ? "bg-sky-100 text-sky-700 border-sky-700" : ""}
+                                `}
+                    >
+                      {index < currentStep ? (
+                        <CheckCircle size={20} />
+                      ) : (
+                        <step.icon size={20} />
+                      )}
+                    </div>
+                    <span className="mt-2 text-sm font-medium hidden sm:inline-block">
+                      {step.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
             {renderStepContent()}
             {!isSuccess && (
               <div className="flex justify-between mt-8">
                 {currentStep > 0 && (
-                  <button
+                  <Button
                     onClick={handleGoBack}
-                    className="flex items-center px-6 py-3 rounded-full bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 transition-colors duration-200 shadow-md"
+                    variant="outline"
+                    className="flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full text-gray-800 font-semibold hover:bg-gray-300 transition-colors duration-200 shadow-md"
                   >
                     <svg
                       className="w-4 h-4 mr-2"
@@ -399,14 +441,16 @@ const Appointment = () => {
                       ></path>
                     </svg>
                     Go Back
-                  </button>
+                  </Button>
                 )}
                 {currentStep < steps.length - 1 && (
-                  <button
+                  <Button
                     onClick={handleNext}
-                    className="ml-auto flex items-center px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-md"
+                    className="ml-auto flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-[var(--color-primary)] text-white font-semibold hover:bg-blue-900 transition-colors duration-200 shadow-md"
                   >
-                    Next {steps[currentStep + 1].name}
+                    <span className="hidden sm:inline">
+                      Next {steps[currentStep + 1].name}
+                    </span>
                     <svg
                       className="w-4 h-4 ml-2"
                       fill="none"
@@ -421,31 +465,39 @@ const Appointment = () => {
                         d="M14 5l7 7m0 0l-7 7m7-7H3"
                       ></path>
                     </svg>
-                  </button>
+                  </Button>
                 )}
-                {currentStep === steps.length - 1 && (
-                  <button
-                    onClick={sendAppointmentEmail}
-                    disabled={isSubmitting}
-                    className="ml-auto flex items-center px-6 py-3 rounded-full bg-sky-900 text-white font-semibold hover:bg-sky-700 transition-colors duration-200 shadow-md disabled:bg-gray-400"
-                  >
-                    {isSubmitting ? "Booking..." : "Book Appointment"}
-                    <svg
-                      className="w-4 h-4 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      ></path>
-                    </svg>
-                  </button>
-                )}
+                 {currentStep === steps.length - 1 && (
+  <Button
+    onClick={sendAppointmentEmail}
+    disabled={isSubmitting}
+    className="ml-auto flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-sky-900 text-white font-semibold hover:bg-sky-700 transition-colors duration-200 shadow-md disabled:bg-gray-400"
+  >
+    {isSubmitting ? (
+      "Booking..."
+    ) : (
+      <>
+        <span className="inline sm:hidden">Book</span>
+        <span className="hidden sm:inline">Book Appointment</span>
+      </>
+    )}
+    <svg
+      className="w-4 h-4 ml-2"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+      ></path>
+    </svg>
+  </Button>
+)}
+            
               </div>
             )}
           </div>
