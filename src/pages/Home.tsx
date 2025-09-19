@@ -571,7 +571,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* Left side images */}
             <div className="space-y-4">
-              <p className="text-blue-600 font-medium mb-2">
+              <p className="text-blue-900 mb-2">
                 Everything You Need to Know
               </p>
               <h2 className="text-4xl font-bold mb-4 text-gray-800 leading-snug">
