@@ -17,7 +17,10 @@ const Testimonials = () => {
           <nav className="text-sm text-gray-500 mb-4 mt-4">
             <ol className="inline-flex items-center space-x-1">
               <li>
-                <a href="/" className="hover:underline text-blue-600">
+                <a
+                  href="/"
+                  className="hover:underline  text-[var(--color-primary)]"
+                >
                   Home
                 </a>
               </li>

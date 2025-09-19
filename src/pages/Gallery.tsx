@@ -46,19 +46,40 @@ const Gallery = () => {
 
   return (
     <div className="bg-gray-50 text-gray-900 min-h-screen font-sans">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-extrabold t mb-4">
-            Our Gallery
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            A glimpse into our state-of-the-art dental clinic, our dedicated
-            team, and the happy smiles we've helped create.
-          </p>
+      <div className="bg-blue-50 py-10">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">Our Gallery</h1>
+          <hr className="border-t border-black/60 w-full mx-auto mt-2" />
+          <nav className="text-sm text-gray-500 mb-4 mt-4">
+            <ol className="inline-flex items-center space-x-1">
+              <li>
+                <a
+                  href="/"
+                  className="hover:underline text-[var(--color-primary)]"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <span className="mx-2">›</span>
+              </li>
+              <li className="text-gray-700 font-medium">Gallery</li>
+            </ol>
+          </nav>
         </div>
-
+      </div>
+      <div className="text-center">
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          A glimpse into our state-of-the-art dental clinic, our dedicated team,
+          and the happy smiles we've helped create.
+        </p>
+      </div>
+      <div className="container mx-auto px-4 py-16">
         {/* Prominent Animated Image */}
-        <div className="flex justify-center pt-12 mb-12" ref={prominentImageRef}>
+        <div
+          className="flex justify-center pt-12 mb-12"
+          ref={prominentImageRef}
+        >
           <img
             src={prominentImage.src}
             alt={prominentImage.alt}

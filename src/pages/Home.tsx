@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   defaultSpring,
   fadeInUp,
-  getDirectionVariant,
   StatCounter,
 } from "@/lib/annimations";
 import TypewriterText from "../lib/TypewriterText";
@@ -15,7 +14,7 @@ import TestimonialCard from "../components/TestimonialCard";
 import ContactGrid from "../components/layout/ContactGrid";
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,7 +24,15 @@ export default function Home() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+const [isFirstImageLoaded, setIsFirstImageLoaded] = useState(false);
 
+useEffect(() => {
+  const img = new Image();
+  img.src = heroSlides[0].image; // Load the first image
+  img.onload = () => {
+    setIsFirstImageLoaded(true);
+  };
+}, []);
   const heroSlides: {
     image: string;
     title: string;
@@ -168,28 +175,16 @@ export default function Home() {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
 
   return (
-    <div className="w-full overflow-x-hidden overflow-y-hidden ">
-      {" "}
-      {/* Hero Section */}
-      <div className="relative w-full min-h-[700px] md:min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="w-full overflow-x-hidden overflow-y-hidden">
+      <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
+        {/* AnimatePresence and background image logic */}
         <AnimatePresence>
           <motion.div
             key={heroSlides[currentIndex].image}
-            initial={
-              isMobile
-                ? { opacity: 0, y: 20 }
-                : getDirectionVariant("right").initial
-            }
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            animate={
-              isMobile
-                ? { opacity: 1, y: 0 }
-                : getDirectionVariant("right").animate
-            }
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            // Change the transition here
-            transition={{ duration: 1.5, delay: 0.5 }} // A shorter duration is much smoother
+            transition={{ duration: 1.5, delay: 0.5 }}
             className="absolute inset-0 bg-cover bg-center bg-no-repeat h-full w-full"
             style={{
               backgroundImage: `url(${heroSlides[currentIndex].image})`,
@@ -197,52 +192,44 @@ export default function Home() {
               backgroundColor: "rgba(0, 0, 0, 0.4)",
             }}
           >
-            {/* <div className="absolute inset-0 bg-gradient-to-r from-[#f0f0f0]/90  to-transparent "></div> */}
+            {/* The rest of the background overlay divs */}
             <div className="absolute inset-0 z-10 bg-radial-[at_center] from-black/80 to-transparent"></div>
-            {/* <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#2e2976]/90 to-transparent"></div> */}
           </motion.div>
         </AnimatePresence>
-        {/* Text Content */}
-        <div className="relative z-10 text-white px-6 md:px-12 max-w-4xl flex flex-col h-full justify-center">
-          <motion.h1
-            key={heroSlides[currentIndex].title}
-            initial={{ opacity: 0 }} // Start completely transparent
-            animate={{ opacity: 1 }} // Fade to fully visible
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, delay: 0.5 }} // Keep a smooth, short duration
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold   leading-tight mb-4 text-white"
-          >
-            {heroSlides[currentIndex].title}
-          </motion.h1>
 
-          <motion.p
-            key={heroSlides[currentIndex].subtitle}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, delay: 1.6 }}
-            className="text-gray-900 md:text-xl mb-6 font-semibold text-white"
-          >
-            {heroSlides[currentIndex].subtitle}
-          </motion.p>
+        {/* Conditionally render the content only after the first image is loaded */}
+        {isFirstImageLoaded && (
+          <div className="relative z-10 text-white px-6 md:px-12 max-w-4xl flex flex-col h-full justify-center">
+            <motion.h1
+              key={heroSlides[currentIndex].title}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, delay: 0.5 }}
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-4 text-white"
+            >
+              {heroSlides[currentIndex].title}
+            </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 1.9 }}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.8, rotate: -10 }}
-          ></motion.div>
-          <Button
-            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary)] text-white
-      px-6 py-3 rounded-lg shadow-xl transition duration-300 ease-in-out font-bold text-lg w-fit"
-          >
-            <Link to="/appointment" className="text-white">
-              Book Appointment
-            </Link>
-          </Button>
-        </div>
+            <motion.p
+              key={heroSlides[currentIndex].subtitle}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, delay: 1.6 }}
+              className="text-gray-900 md:text-xl mb-6 font-semibold text-white"
+            >
+              {heroSlides[currentIndex].subtitle}
+            </motion.p>
+            <Button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary)] text-white px-6 py-3 rounded-lg shadow-xl transition duration-300 ease-in-out font-bold text-lg w-fit">
+              <Link to="/appointment" className="text-white">
+                Book Appointment
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
+
       <div className="w-full relative -mt-16 sm:-mt-24 lg:-mt-32 z-20">
         <ContactGrid />
       </div>
@@ -571,9 +558,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* Left side images */}
             <div className="space-y-4">
-              <p className="text-blue-900 mb-2">
-                Everything You Need to Know
-              </p>
+              <p className="text-blue-900 mb-2">Everything You Need to Know</p>
               <h2 className="text-4xl font-bold mb-4 text-gray-800 leading-snug">
                 <TypewriterText text="Frequently Asked Questions" />
               </h2>

@@ -340,7 +340,10 @@ const Appointment = () => {
           <nav className="text-sm text-gray-500">
             <ol className="inline-flex items-center space-x-1">
               <li>
-                <a href="/" className="hover:underline ">
+                <a
+                  href="/"
+                  className="hover:underline  text-[var(--color-primary)]"
+                >
                   Home
                 </a>
               </li>
@@ -467,37 +470,38 @@ const Appointment = () => {
                     </svg>
                   </Button>
                 )}
-                 {currentStep === steps.length - 1 && (
-  <Button
-    onClick={sendAppointmentEmail}
-    disabled={isSubmitting}
-    className="ml-auto flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-sky-900 text-white font-semibold hover:bg-sky-700 transition-colors duration-200 shadow-md disabled:bg-gray-400"
-  >
-    {isSubmitting ? (
-      "Booking..."
-    ) : (
-      <>
-        <span className="inline sm:hidden">Book</span>
-        <span className="hidden sm:inline">Book Appointment</span>
-      </>
-    )}
-    <svg
-      className="w-4 h-4 ml-2"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-      ></path>
-    </svg>
-  </Button>
-)}
-            
+                {currentStep === steps.length - 1 && (
+                  <Button
+                    onClick={sendAppointmentEmail}
+                    disabled={isSubmitting}
+                    className="ml-auto flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-sky-900 text-white font-semibold hover:bg-sky-700 transition-colors duration-200 shadow-md disabled:bg-gray-400"
+                  >
+                    {isSubmitting ? (
+                      "Booking..."
+                    ) : (
+                      <>
+                        <span className="inline sm:hidden">Book</span>
+                        <span className="hidden sm:inline">
+                          Book Appointment
+                        </span>
+                      </>
+                    )}
+                    <svg
+                      className="w-4 h-4 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                  </Button>
+                )}
               </div>
             )}
           </div>

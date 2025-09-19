@@ -4,9 +4,31 @@ import { servicesData } from "../data/servicesData";
 export default function Services() {
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Our Services</h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-2">
+          Our Services{" "}
+        </h1>
+        
+        <hr className="border-t border-black/60 w-1/2 mx-auto mb-4" />
+        <nav className="text-sm text-gray-500">
+          <ol className="inline-flex items-center space-x-1">
+            <li>
+              <a
+                href="/"
+                className="hover:underline  text-[var(--color-primary)]"
+              >
+                Home
+              </a>
+            </li>
+            <li>
+              <span className="mx-2">›</span>
+            </li>
+            <li className="text-gray-700 font-medium">Services</li>
+          </ol>
+        </nav>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries(servicesData).map(([id, service], index) => {
           const servicesProvided = service.servicesProvided;
           const isEven = index % 2 === 0; // alternate cards
@@ -50,7 +72,7 @@ export default function Services() {
                         {servicesProvided.slice(0, 3).map((step, idx) => (
                           <li
                             className="before:content-['>'] before:mr-2 before:text-blue-500"
-                             key={idx}
+                            key={idx}
                           >
                             {step}
                           </li>
@@ -65,6 +87,8 @@ export default function Services() {
           );
         })}
       </div>
+</div>
+      
     </div>
   );
 }
