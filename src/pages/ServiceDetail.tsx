@@ -151,7 +151,7 @@ export default function ServiceDetail() {
                     ) => (
                       <li
                         key={itemIndex}
-                        className="flex justify-start text-base gap-2 text-blue-700"
+                        className="flex justify-start text-base gap-2 text-blue-900"
                       >
                         <span className="text-base font-medium">
                           {item.name}
@@ -285,7 +285,7 @@ export default function ServiceDetail() {
                   </div>
                 )}
               <div className="bg-gray-100 p-6 rounded-lg border-l-4 border-blue-600">
-                <h4 className="text-2xl font-semibold text-blue-600 mb-2">
+                <h4 className="text-2xl font-semibold text-[var(--color-primary)] mb-2">
                   Service Overview
                 </h4>
                 <p className="text-gray-800">{service.introduction}</p>
@@ -304,7 +304,7 @@ export default function ServiceDetail() {
                 return (
                   <div className={`grid grid-cols-1 md:${columns} gap-4 mt-6`}>
                     {hasAdult && (
-                      <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
+                      <div className="bg-gray-50 p-6 rounded-lg ">
                         {service.description.adult && (
                           <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
                             <h5 className="text-lg font-bold text-gray-800 mb-4">
@@ -332,7 +332,7 @@ export default function ServiceDetail() {
                                 (service.description.adult.process ?? [])
                                   .length > 0 && (
                                   <div className="space-y-4 mt-8">
-                                    <h5 className="font-semibold text-blue-600 text-lg">
+                                    <h5 className="font-semibold text-[var(--color-primary)] text-lg">
                                       Procedure at FIX Dental Care
                                     </h5>
                                     <ol className="list-decimal list-inside ml-4 space-y-2 text-base leading-relaxed">
@@ -349,7 +349,7 @@ export default function ServiceDetail() {
                                 []
                               ).length > 0 && (
                                 <div className="space-y-4 mt-8">
-                                  <h5 className="font-semibold text-blue-600 text-lg">
+                                  <h5 className="font-semibold text-[var(--color-primary)] text-lg">
                                     Procedure at FIXED Dental Care
                                   </h5>
                                   {(
@@ -380,7 +380,7 @@ export default function ServiceDetail() {
                                 service.description.adult
                                   .aftercareAndExpectations.length > 0 && (
                                   <div className="space-y-4 mt-8">
-                                    <h4 className="text-2xl font-semibold text-blue-600">
+                                    <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
                                       Aftercare and Expectations
                                     </h4>
                                     <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -399,9 +399,9 @@ export default function ServiceDetail() {
                       </div>
                     )}
                     {hasChild && (
-                      <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                      <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
                         {service.description.child && (
-                          <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                          <div className="bg-gray-50 p-6 rounded-lg ">
                             <h5 className="text-lg font-bold text-gray-800 mb-4">
                               {getCategoryHeading("child")} in children
                             </h5>
@@ -427,7 +427,7 @@ export default function ServiceDetail() {
                                 (service.description.child.process ?? [])
                                   .length > 0 && (
                                   <div className="space-y-4 mt-8">
-                                    <h5 className="font-semibold text-blue-600 text-lg">
+                                    <h5 className="font-semibold text-[var(--color-primary)]0 text-lg">
                                       Procedure at FIX Dental Care
                                     </h5>
                                     <ol className="list-decimal list-inside ml-4 space-y-2 text-base leading-relaxed">
@@ -444,7 +444,7 @@ export default function ServiceDetail() {
                                 []
                               ).length > 0 && (
                                 <div className="space-y-4 mt-8">
-                                  <h5 className="font-semibold text-blue-600 text-lg">
+                                  <h5 className="font-semibold text-[var(--color-primary)] text-lg">
                                     Procedure at FIXED Dental Care
                                   </h5>
                                   {(
@@ -475,7 +475,7 @@ export default function ServiceDetail() {
                                 service.description.child
                                   .aftercareAndExpectations.length > 0 && (
                                   <div className="space-y-4 mt-8">
-                                    <h4 className="text-2xl font-semibold text-blue-600">
+                                    <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
                                       Aftercare and Expectations
                                     </h4>
                                     <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -547,7 +547,7 @@ export default function ServiceDetail() {
               {service.aftercareAndExpectations &&
                 service.aftercareAndExpectations.length > 0 && (
                   <div className="space-y-4 mt-8">
-                    <h4 className="text-2xl font-semibold text-blue-600">
+                    <h4 className="text-2xl font-semibold text-[var(--color-primary)]">
                       Aftercare and Expectations
                     </h4>
                     <ul className="list-disc list-inside space-y-2 text-gray-700">
