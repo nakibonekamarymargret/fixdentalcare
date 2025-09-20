@@ -284,7 +284,7 @@ export default function ServiceDetail() {
                     </ul>
                   </div>
                 )}
-              <div className="bg-gray-100 p-6 rounded-lg border-l-4 border-blue-600">
+              <div className="bg-gray-100 p-6 rounded-lg border-l-4 border-gray-400">
                 <h4 className="text-2xl font-semibold text-[var(--color-primary)] mb-2">
                   Service Overview
                 </h4>
@@ -306,7 +306,7 @@ export default function ServiceDetail() {
                     {hasAdult && (
                       <div className="bg-gray-50 p-6 rounded-lg ">
                         {service.description.adult && (
-                          <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
+                          <div className="bg-gray-50 p-6 rounded-lg border-l-4 b border-gray-400">
                             <h5 className="text-lg font-bold text-gray-800 mb-4">
                               {getCategoryHeading("adult")} in adults
                             </h5>
@@ -399,7 +399,7 @@ export default function ServiceDetail() {
                       </div>
                     )}
                     {hasChild && (
-                      <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-600">
+                      <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
                         {service.description.child && (
                           <div className="bg-gray-50 p-6 rounded-lg ">
                             <h5 className="text-lg font-bold text-gray-800 mb-4">
